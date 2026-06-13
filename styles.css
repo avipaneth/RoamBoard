@@ -648,10 +648,11 @@ select {
 }
 
 .product-hero {
-  min-height: calc(100svh - var(--nav-h));
-  padding: calc(var(--nav-h) + var(--product-nav-h) + 56px) clamp(22px, 5vw, 76px) 56px;
-  grid-template-rows: auto auto auto;
-  gap: clamp(20px, 2.6vw, 30px);
+  min-height: calc(100svh - var(--product-nav-h));
+  padding: calc(var(--nav-h) + clamp(32px, 6vh, 58px)) clamp(22px, 5vw, 76px) clamp(30px, 5vh, 58px);
+  grid-template-columns: minmax(310px, 0.88fr) minmax(340px, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: clamp(30px, 5vw, 78px);
   background: #f7f7f5;
 }
 
@@ -662,8 +663,10 @@ select {
 .product-hero-copy {
   position: relative;
   z-index: 3;
-  text-align: center;
-  align-self: end;
+  max-width: 600px;
+  text-align: left;
+  align-self: center;
+  justify-self: end;
 }
 
 .product-hero-copy::before {
@@ -671,18 +674,20 @@ select {
 }
 
 .product-hero h1 {
-  font-size: clamp(68px, 9.4vw, 124px);
+  max-width: 6.6ch;
+  font-size: 104px;
   font-weight: 430;
   line-height: 0.9;
   text-shadow: none;
+  transform-origin: left center;
 }
 
 .product-theatre {
   position: relative;
   inset: auto;
   z-index: 1;
-  width: min(900px, 100%);
-  aspect-ratio: 1.25;
+  width: min(460px, 36vw);
+  aspect-ratio: 1122 / 1402;
   min-height: 0;
   margin: 0 auto;
   display: grid;
@@ -692,14 +697,14 @@ select {
 .lifestyle-theatre {
   overflow: hidden;
   border-radius: 0;
-  box-shadow: 0 30px 78px rgba(43, 28, 21, 0.08);
+  box-shadow: 0 28px 72px rgba(43, 28, 21, 0.08);
 }
 
 .lifestyle-hero-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 47%;
+  object-position: 50% 64%;
   transform: scale(1);
   animation: lifestyle-reveal 1300ms cubic-bezier(0.2, 0.72, 0.17, 1) both;
 }
@@ -707,29 +712,32 @@ select {
 .product-hero .hero-footer {
   position: relative;
   z-index: 3;
-  gap: 18px;
-  align-self: start;
+  place-items: start;
+  gap: 16px;
+  align-self: auto;
   padding-bottom: 0;
+  margin-top: 24px;
+  text-align: left;
 }
 
 .product-hero .hero-footer p {
-  max-width: 760px;
+  max-width: 540px;
   color: rgba(29, 29, 31, 0.72);
   text-shadow: none;
 }
 
 .hero-intro {
   color: var(--ink) !important;
-  max-width: 720px !important;
-  font-size: clamp(17px, 1.55vw, 22px) !important;
+  max-width: 520px !important;
+  font-size: 21px !important;
   line-height: 1.22 !important;
 }
 
 .compatibility-copy {
-  max-width: 680px !important;
+  max-width: 520px !important;
   margin: 0 !important;
   color: var(--muted) !important;
-  font-size: clamp(14px, 1.2vw, 17px) !important;
+  font-size: 15px !important;
   font-weight: 400 !important;
   line-height: 1.42 !important;
 }
@@ -1958,23 +1966,39 @@ select:focus {
 
   .product-hero {
     min-height: auto;
-    padding: calc(var(--nav-h) + var(--product-nav-h) + 42px) 24px 54px;
-    grid-template-rows: auto auto auto;
-    gap: 24px;
+    padding: calc(var(--nav-h) + 34px) 24px 54px;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: 30px;
+  }
+
+  .product-hero-copy {
+    max-width: 620px;
+    text-align: center;
+    justify-self: center;
   }
 
   .product-hero h1 {
-    font-size: clamp(54px, 14vw, 96px);
+    max-width: 7.2ch;
+    margin-inline: auto;
+    font-size: 76px;
+    transform-origin: center;
   }
 
   .product-theatre {
+    width: min(430px, 88vw);
     min-height: 0;
   }
 
+  .product-hero .hero-footer {
+    place-items: center;
+    text-align: center;
+  }
+
   .lifestyle-hero-image {
-    height: auto;
-    object-fit: contain;
-    object-position: center;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 64%;
   }
 
   .seo-intro,
@@ -2154,19 +2178,20 @@ select:focus {
   .hero h1 {
     max-width: 8.4ch;
     margin-inline: auto;
-    font-size: clamp(54px, 16vw, 72px);
+    font-size: 64px;
     line-height: 0.9;
   }
 
   .product-hero h1 {
-    max-width: 8.4ch;
+    max-width: 7.2ch;
     margin-inline: auto;
-    font-size: clamp(46px, 13vw, 62px);
+    font-size: 54px;
     line-height: 0.9;
     white-space: normal;
   }
 
   .product-theatre {
+    width: min(100%, 360px);
     min-height: 0;
     margin-top: 0;
   }
@@ -2177,14 +2202,13 @@ select:focus {
   }
 
   .lifestyle-theatre {
-    width: 100%;
     min-height: 0;
   }
 
   .lifestyle-hero-image {
-    height: auto;
-    object-fit: contain;
-    object-position: center;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 64%;
   }
 
   .hero-wordmark {
