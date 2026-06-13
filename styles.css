@@ -648,12 +648,11 @@ select {
 }
 
 .product-hero {
-  min-height: calc(100svh - var(--product-nav-h));
-  padding: calc(var(--nav-h) + clamp(32px, 6vh, 58px)) clamp(22px, 5vw, 76px) clamp(30px, 5vh, 58px);
-  grid-template-columns: minmax(310px, 0.88fr) minmax(340px, 1fr);
-  grid-template-rows: minmax(0, 1fr);
-  gap: clamp(30px, 5vw, 78px);
-  background: #f7f7f5;
+  min-height: auto;
+  padding: 90px 0 88px;
+  display: block;
+  overflow: visible;
+  background: #fff;
 }
 
 .product-hero::before {
@@ -663,10 +662,8 @@ select {
 .product-hero-copy {
   position: relative;
   z-index: 3;
-  max-width: 600px;
+  max-width: 520px;
   text-align: left;
-  align-self: center;
-  justify-self: end;
 }
 
 .product-hero-copy::before {
@@ -674,21 +671,63 @@ select {
 }
 
 .product-hero h1 {
-  max-width: 6.6ch;
-  font-size: 104px;
+  margin: 0;
+  max-width: 9ch;
+  font-size: 48px;
   font-weight: 430;
-  line-height: 0.9;
+  line-height: 1.06;
   text-shadow: none;
   transform-origin: left center;
+}
+
+.buyflow-shell {
+  width: min(1260px, calc(100% - 44px));
+  margin: 0 auto;
+}
+
+.buyflow-header {
+  min-height: 196px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.hero-quick-buy {
+  min-width: 238px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  padding-top: 34px;
+}
+
+.hero-quick-buy p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.32;
+  text-align: right;
+}
+
+.buyflow-main {
+  display: grid;
+  grid-template-columns: minmax(0, 872px) 328px;
+  gap: 60px;
+  align-items: start;
+}
+
+.buyflow-gallery {
+  position: relative;
 }
 
 .product-theatre {
   position: relative;
   inset: auto;
   z-index: 1;
-  width: min(460px, 36vw);
-  aspect-ratio: 1122 / 1402;
-  min-height: 0;
+  width: 100%;
+  aspect-ratio: 872 / 620;
+  min-height: 560px;
   margin: 0 auto;
   display: grid;
   place-items: center;
@@ -696,41 +735,171 @@ select {
 
 .lifestyle-theatre {
   overflow: hidden;
-  border-radius: 0;
-  box-shadow: 0 28px 72px rgba(43, 28, 21, 0.08);
+  border-radius: 18px;
+  background: #f5f5f7;
+  box-shadow: none;
 }
 
 .lifestyle-hero-image {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: 50% 64%;
+  object-fit: contain;
+  object-position: center;
   transform: scale(1);
   animation: lifestyle-reveal 1300ms cubic-bezier(0.2, 0.72, 0.17, 1) both;
 }
 
-.product-hero .hero-footer {
+.hero-gallery-controls {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transform: translateX(-50%);
+}
+
+.gallery-arrow {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: rgba(29, 29, 31, 0.48);
+  background: rgba(232, 232, 237, 0.86);
+  font-size: 30px;
+  line-height: 1;
+}
+
+.gallery-dots {
+  height: 44px;
+  min-width: 76px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-radius: 999px;
+  background: rgba(232, 232, 237, 0.86);
+}
+
+.gallery-dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(29, 29, 31, 0.28);
+}
+
+.gallery-dots .is-active {
+  background: var(--ink);
+}
+
+.hero-config {
   position: relative;
   z-index: 3;
-  place-items: start;
-  gap: 16px;
-  align-self: auto;
-  padding-bottom: 0;
-  margin-top: 24px;
+  padding-top: 210px;
   text-align: left;
 }
 
-.product-hero .hero-footer p {
-  max-width: 540px;
-  color: rgba(29, 29, 31, 0.72);
-  text-shadow: none;
+.hero-config-step + .hero-config-step,
+.hero-purchase-card {
+  margin-top: 42px;
+}
+
+.hero-config h2 {
+  margin: 0;
+  max-width: 328px;
+  color: var(--ink);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.18;
+  letter-spacing: 0;
+}
+
+.hero-config h2 span {
+  font-weight: 600;
+}
+
+.hero-option-label {
+  margin: 22px 0 12px;
+  color: rgba(29, 29, 31, 0.88);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.hero-swatches {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hero-swatch {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(29, 29, 31, 0.12);
+}
+
+.hero-swatch.is-selected {
+  outline: 2px solid #0071e3;
+  outline-offset: 4px;
+}
+
+.hero-swatch.brown {
+  background: #57382a;
+}
+
+.hero-swatch.orange {
+  background: #d8763d;
+}
+
+.hero-swatch.blue {
+  background: #a9c8db;
+}
+
+.hero-option-card,
+.hero-purchase-card {
+  border: 1px solid rgba(29, 29, 31, 0.18);
+  border-radius: 12px;
+  padding: 16px;
+  background: #fff;
+}
+
+.hero-option-card strong,
+.hero-purchase-title {
+  display: block;
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.hero-option-card p,
+.hero-purchase-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.36;
+}
+
+.hero-purchase-card {
+  background: #f5f5f7;
+}
+
+.hero-purchase-card .pill-button {
+  width: 100%;
+  margin-top: 16px;
 }
 
 .hero-intro {
+  margin: 10px 0 0;
   color: var(--ink) !important;
-  max-width: 520px !important;
-  font-size: 21px !important;
-  line-height: 1.22 !important;
+  max-width: 460px !important;
+  font-size: 19px !important;
+  line-height: 1.32 !important;
 }
 
 .compatibility-copy {
@@ -1966,39 +2135,56 @@ select:focus {
 
   .product-hero {
     min-height: auto;
-    padding: calc(var(--nav-h) + 34px) 24px 54px;
+    padding: 40px 0 70px;
+    display: block;
+  }
+
+  .buyflow-shell {
+    width: min(100% - 48px, 680px);
+  }
+
+  .buyflow-header {
+    min-height: 148px;
+    gap: 22px;
+  }
+
+  .hero-quick-buy {
+    min-width: 190px;
+    align-items: flex-start;
+  }
+
+  .buyflow-main {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    gap: 30px;
+    gap: 42px;
   }
 
   .product-hero-copy {
     max-width: 620px;
-    text-align: center;
-    justify-self: center;
+    text-align: left;
   }
 
   .product-hero h1 {
-    max-width: 7.2ch;
-    margin-inline: auto;
-    font-size: 76px;
-    transform-origin: center;
+    max-width: 9ch;
+    margin-inline: 0;
+    font-size: 46px;
+    transform-origin: left center;
   }
 
   .product-theatre {
-    width: min(430px, 88vw);
-    min-height: 0;
+    width: 100%;
+    min-height: 460px;
   }
 
-  .product-hero .hero-footer {
-    place-items: center;
-    text-align: center;
+  .hero-config {
+    max-width: 420px;
+    margin: 0 auto;
+    padding-top: 0;
   }
 
   .lifestyle-hero-image {
     height: 100%;
-    object-fit: cover;
-    object-position: 50% 64%;
+    object-fit: contain;
+    object-position: center;
   }
 
   .seo-intro,
@@ -2183,22 +2369,64 @@ select:focus {
   }
 
   .product-hero h1 {
-    max-width: 7.2ch;
-    margin-inline: auto;
-    font-size: 54px;
-    line-height: 0.9;
+    max-width: none;
+    margin-inline: 0;
+    font-size: 42px;
+    line-height: 1.08;
     white-space: normal;
   }
 
+  .product-hero {
+    padding: 32px 0 64px;
+  }
+
+  .buyflow-shell {
+    width: calc(100% - 44px);
+  }
+
+  .buyflow-header {
+    min-height: 0;
+    display: grid;
+    gap: 18px;
+    margin-bottom: 34px;
+  }
+
+  .hero-quick-buy {
+    min-width: 0;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding-top: 0;
+  }
+
+  .hero-quick-buy p {
+    width: 100%;
+    text-align: left;
+  }
+
+  .buyflow-main {
+    gap: 36px;
+  }
+
   .product-theatre {
-    width: min(100%, 360px);
+    width: 100%;
+    aspect-ratio: 4 / 5;
     min-height: 0;
     margin-top: 0;
   }
 
-  .product-hero .hero-footer p {
-    max-width: 32ch;
-    font-size: 18px;
+  .hero-gallery-controls {
+    bottom: 12px;
+  }
+
+  .gallery-arrow {
+    width: 38px;
+    height: 38px;
+    font-size: 25px;
+  }
+
+  .gallery-dots {
+    height: 38px;
+    min-width: 64px;
   }
 
   .lifestyle-theatre {
@@ -2207,8 +2435,16 @@ select:focus {
 
   .lifestyle-hero-image {
     height: 100%;
-    object-fit: cover;
-    object-position: 50% 64%;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .hero-config {
+    max-width: none;
+  }
+
+  .hero-config h2 {
+    font-size: 22px;
   }
 
   .hero-wordmark {
