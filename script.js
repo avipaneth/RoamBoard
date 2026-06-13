@@ -10,6 +10,10 @@ const stockDialog = document.querySelector(".stock-dialog");
 const stockConfirm = document.querySelector("#stock-confirm");
 const stockCancelButtons = document.querySelectorAll("[data-stock-cancel]");
 const orderTriggers = document.querySelectorAll(".order-trigger");
+const colourPicker = document.querySelector("[data-colour-picker]");
+const colourPreview = document.querySelector("[data-colour-preview]");
+const colourName = document.querySelector("[data-colour-selected-name]");
+const colourCopy = document.querySelector("[data-colour-selected-copy]");
 
 let pendingOrderData = null;
 let orderModalContext = "cta";
@@ -100,6 +104,39 @@ orderTriggers.forEach((trigger) => {
   trigger.addEventListener("click", (event) => {
     event.preventDefault();
     openStockModal("cta");
+  });
+});
+
+function updateColourChoice(input) {
+  if (!(input instanceof HTMLInputElement) || input.name !== "roam-colour") return;
+
+  const { colourImage, colourName: selectedName, colourAlt, colourCopy: selectedCopy } = input.dataset;
+  if (!colourImage || !selectedName || !colourAlt || !selectedCopy || !colourPreview) return;
+
+  colourPicker.querySelectorAll(".colour-radio").forEach((label) => {
+    label.classList.toggle("is-selected", label.contains(input));
+  });
+
+  colourPreview.classList.add("is-changing");
+  window.setTimeout(() => {
+    colourPreview.src = colourImage;
+    colourPreview.alt = colourAlt;
+    if (colourName) colourName.textContent = selectedName;
+    if (colourCopy) colourCopy.textContent = selectedCopy;
+    colourPreview.classList.remove("is-changing");
+  }, 140);
+}
+
+colourPicker?.addEventListener("change", (event) => {
+  updateColourChoice(event.target);
+});
+
+colourPicker?.querySelectorAll(".colour-radio").forEach((label) => {
+  label.addEventListener("click", () => {
+    const input = label.querySelector("input");
+    if (!(input instanceof HTMLInputElement)) return;
+    input.checked = true;
+    updateColourChoice(input);
   });
 });
 

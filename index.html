@@ -49,109 +49,96 @@
 
     <main id="top">
       <section class="hero product-hero" aria-labelledby="hero-title">
-        <div class="buyflow-shell">
-          <div class="buyflow-header reveal">
-            <div class="product-hero-copy">
-              <p class="eyebrow">New</p>
-              <h1 id="hero-title">Buy Roamboard</h1>
-              <p class="hero-intro">The travel powerboard for Australians abroad.</p>
-            </div>
-
-            <div class="hero-quick-buy" aria-label="Roamboard purchase summary">
-              <p>Type E/F European plug built in</p>
+        <div class="landing-hero-shell">
+          <div class="landing-hero-copy reveal">
+            <p class="eyebrow">Roamboard</p>
+            <h1 id="hero-title">Power, anywhere.</h1>
+            <p class="hero-intro">
+              The travel powerboard for Australians abroad. One overseas socket becomes a calm charging setup
+              for everything you packed.
+            </p>
+            <div class="hero-actions">
               <a class="pill-button order-trigger" href="#preorder">Buy now</a>
+              <a class="text-link" href="#colourways">Choose a colour</a>
             </div>
           </div>
 
-          <div class="buyflow-main">
-            <div class="buyflow-gallery reveal">
-              <div class="product-theatre lifestyle-theatre" aria-label="Roamboard lifestyle hero image">
-                <img
-                  class="lifestyle-hero-image"
-                  src="assets/roam-lifestyle-hero.png"
-                  alt="Person holding the chocolate brown Roamboard powerboard with its braided cord"
-                />
-              </div>
-
-              <div class="hero-gallery-controls" aria-hidden="true">
-                <span class="gallery-arrow">&lsaquo;</span>
-                <span class="gallery-dots">
-                  <span class="is-active"></span>
-                  <span></span>
-                </span>
-                <span class="gallery-arrow">&rsaquo;</span>
-              </div>
-            </div>
-
-            <aside class="hero-config reveal" aria-label="Roamboard purchase options">
-              <div class="hero-config-step">
-                <h2><span>Colour.</span> Pick your favourite.</h2>
-                <p class="hero-option-label">Chocolate Brown</p>
-                <div class="hero-swatches" aria-label="Available Roamboard colours">
-                  <span class="hero-swatch brown is-selected" aria-label="Chocolate Brown"></span>
-                  <span class="hero-swatch orange" aria-label="Cosmic Orange"></span>
-                  <span class="hero-swatch blue" aria-label="Baby Blue"></span>
-                </div>
-              </div>
-
-              <div class="hero-config-step">
-                <h2><span>Plug.</span> Built for the trip.</h2>
-                <div class="hero-option-card">
-                  <strong>European Type E/F plug</strong>
-                  <p>Use Australian devices across most of Europe, Bali / Indonesia, Turkey, South Korea, Morocco, Egypt and more.</p>
-                </div>
-              </div>
-
-              <div class="hero-purchase-card">
-                <p class="hero-purchase-title">One overseas socket. A tidy charging setup.</p>
-                <p>No payment today. Buy now records your pre-order interest.</p>
-                <a class="pill-button order-trigger" href="#preorder">Buy now</a>
-              </div>
-            </aside>
+          <div class="landing-hero-media reveal" aria-label="Roamboard lifestyle hero image">
+            <img
+              src="assets/roam-lifestyle-hero.png"
+              alt="Person holding the chocolate brown Roamboard powerboard with its braided cord and European plug"
+            />
           </div>
-
         </div>
       </section>
 
-      <section class="colourways" aria-labelledby="colourways-title">
+      <section class="colourways" id="colourways" aria-labelledby="colourways-title">
         <div class="colourways-head reveal">
           <p class="eyebrow">Three colourways</p>
-          <h2 id="colourways-title">Pick your travel personality.</h2>
-          <p>Same reliable travel setup. Choose the colour that feels most like your bag.</p>
+          <h2 id="colourways-title">Pick the one that feels like yours.</h2>
+          <p>Choose a colour and see the board switch in place.</p>
         </div>
 
-        <div class="colour-lineup reveal">
-          <img
-            src="assets/roam-colour-lineup.png"
-            alt="Roamboard powerboards in Chocolate Brown, Cosmic Orange and Baby Blue"
-          />
-        </div>
+        <div class="colour-picker reveal" data-colour-picker>
+          <div class="colour-preview" aria-live="polite">
+            <img
+              src="assets/roam-brown.png"
+              alt="Chocolate Brown Roamboard travel powerboard"
+              data-colour-preview
+            />
+          </div>
 
-        <div class="colour-grid">
-          <article class="colour-card reveal">
-            <img src="assets/roam-brown.png" alt="Chocolate Brown Roamboard travel powerboard" />
-            <div>
-              <span class="swatch brown"></span>
-              <h3>Chocolate Brown</h3>
-              <p>Warm, polished and quietly expensive. For the overpacker with taste.</p>
+          <div class="colour-controls">
+            <p class="colour-choice-label" data-colour-selected-name>Chocolate Brown</p>
+            <div class="colour-radio-group" role="radiogroup" aria-label="Choose Roamboard colour">
+              <label class="colour-radio brown is-selected">
+                <input
+                  type="radio"
+                  name="roam-colour"
+                  value="brown"
+                  checked
+                  data-colour-image="assets/roam-brown.png"
+                  data-colour-name="Chocolate Brown"
+                  data-colour-alt="Chocolate Brown Roamboard travel powerboard"
+                  data-colour-copy="Warm, polished and quietly expensive. For the overpacker with taste."
+                />
+                <span></span>
+                <small>Chocolate Brown</small>
+              </label>
+
+              <label class="colour-radio orange">
+                <input
+                  type="radio"
+                  name="roam-colour"
+                  value="orange"
+                  data-colour-image="assets/roam-orange.png"
+                  data-colour-name="Cosmic Orange"
+                  data-colour-alt="Cosmic Orange Roamboard travel powerboard"
+                  data-colour-copy="Loud, playful and hard to lose. For chaotic packers and bags full of cables."
+                />
+                <span></span>
+                <small>Cosmic Orange</small>
+              </label>
+
+              <label class="colour-radio blue">
+                <input
+                  type="radio"
+                  name="roam-colour"
+                  value="blue"
+                  data-colour-image="assets/roam-blue.png"
+                  data-colour-name="Baby Blue"
+                  data-colour-alt="Baby Blue Roamboard travel powerboard"
+                  data-colour-copy="Soft, fresh and calm. For organised travellers and camera people."
+                />
+                <span></span>
+                <small>Baby Blue</small>
+              </label>
             </div>
-          </article>
-          <article class="colour-card reveal">
-            <img src="assets/roam-orange.png" alt="Cosmic Orange Roamboard travel powerboard" />
-            <div>
-              <span class="swatch orange"></span>
-              <h3>Cosmic Orange</h3>
-              <p>Loud, playful and hard to lose. For chaotic packers and bags full of cables.</p>
-            </div>
-          </article>
-          <article class="colour-card reveal">
-            <img src="assets/roam-blue.png" alt="Baby Blue Roamboard travel powerboard" />
-            <div>
-              <span class="swatch blue"></span>
-              <h3>Baby Blue</h3>
-              <p>Soft, fresh and calm. For organised travellers and camera people.</p>
-            </div>
-          </article>
+
+            <p class="colour-choice-copy" data-colour-selected-copy>
+              Warm, polished and quietly expensive. For the overpacker with taste.
+            </p>
+          </div>
         </div>
       </section>
 
