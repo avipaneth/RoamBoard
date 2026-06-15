@@ -16,33 +16,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=preorder-button-copy-1" />
   </head>
   <body>
-    <header class="global-nav" aria-label="Main navigation">
-      <a class="brand-mark" href="#top" aria-label="Roamboard home">
-        <span></span>
-      </a>
-      <nav class="global-links" aria-label="Site">
-        <a href="#highlights">Highlights</a>
-        <a href="#design">Design</a>
-        <a class="order-trigger" href="#preorder">Buy now</a>
-      </nav>
-      <a class="nav-icon-button order-trigger" href="#preorder" aria-label="Buy Roamboard now">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M5 12h14M13 6l6 6-6 6" />
-        </svg>
-      </a>
-    </header>
-
     <nav class="product-nav" aria-label="Product navigation">
       <a class="product-name" href="#top">Roamboard</a>
       <div class="product-actions">
         <a href="#highlights">Overview</a>
-        <a href="#design">Specs</a>
+        <a href="#destination-check">Compatibility</a>
         <a class="pill-button small order-trigger" href="#preorder">Buy now</a>
       </div>
     </nav>
@@ -50,95 +34,177 @@
     <main id="top">
       <section class="hero product-hero" aria-labelledby="hero-title">
         <div class="landing-hero-shell">
-          <div class="landing-hero-copy reveal">
-            <p class="eyebrow">Roamboard</p>
-            <h1 id="hero-title">Power, anywhere.</h1>
-            <p class="hero-intro">
-              The travel powerboard for Australians abroad. One overseas socket becomes a calm charging setup
-              for everything you packed.
-            </p>
-            <div class="hero-actions">
-              <a class="pill-button order-trigger" href="#preorder">Buy now</a>
-              <a class="text-link" href="#colourways">Choose a colour</a>
-            </div>
-          </div>
-
           <div class="landing-hero-media reveal" aria-label="Roamboard lifestyle hero image">
             <img
-              src="assets/roam-lifestyle-hero.png"
-              alt="Person holding the chocolate brown Roamboard powerboard with its braided cord and European plug"
+              src="assets/roam-hero-background-wide.png?v=1"
+              alt="Person holding the baby blue Roamboard powerboard with its braided cord and European plug"
             />
+          </div>
+
+          <div class="landing-hero-copy hero-copy-top reveal">
+            <h1 class="hero-reference-title" id="hero-title">Power, anywhere.</h1>
+            <p class="hero-intro">
+              The travel power board for Australians abroad.
+            </p>
+            <div class="hero-buy-panel">
+              <a class="pill-button order-trigger" href="#preorder">Buy Roamboard</a>
+              <p>A$89.95</p>
+            </div>
           </div>
         </div>
       </section>
 
       <section class="colourways" id="colourways" aria-labelledby="colourways-title">
         <div class="colourways-head reveal">
-          <p class="eyebrow">Three colourways</p>
-          <h2 id="colourways-title">Pick the one that feels like yours.</h2>
-          <p>Choose a colour and see the board switch in place.</p>
+          <h2 id="colourways-title">Choose a colour and see the board switch in place.</h2>
         </div>
 
         <div class="colour-picker reveal" data-colour-picker>
-          <div class="colour-preview" aria-live="polite">
+          <div class="colour-collection">
             <img
-              src="assets/roam-brown.png"
-              alt="Chocolate Brown Roamboard travel powerboard"
-              data-colour-preview
+              src="assets/roam-colourways-set.png"
+              alt="Roamboard travel powerboards in Chocolate Brown, Cosmic Orange and Baby Blue"
             />
           </div>
 
           <div class="colour-controls">
-            <p class="colour-choice-label" data-colour-selected-name>Chocolate Brown</p>
-            <div class="colour-radio-group" role="radiogroup" aria-label="Choose Roamboard colour">
-              <label class="colour-radio brown is-selected">
-                <input
-                  type="radio"
-                  name="roam-colour"
-                  value="brown"
-                  checked
-                  data-colour-image="assets/roam-brown.png"
-                  data-colour-name="Chocolate Brown"
-                  data-colour-alt="Chocolate Brown Roamboard travel powerboard"
-                  data-colour-copy="Warm, polished and quietly expensive. For the overpacker with taste."
-                />
-                <span></span>
-                <small>Chocolate Brown</small>
-              </label>
-
-              <label class="colour-radio orange">
-                <input
-                  type="radio"
-                  name="roam-colour"
-                  value="orange"
-                  data-colour-image="assets/roam-orange.png"
-                  data-colour-name="Cosmic Orange"
-                  data-colour-alt="Cosmic Orange Roamboard travel powerboard"
-                  data-colour-copy="Loud, playful and hard to lose. For chaotic packers and bags full of cables."
-                />
-                <span></span>
-                <small>Cosmic Orange</small>
-              </label>
-
-              <label class="colour-radio blue">
-                <input
-                  type="radio"
-                  name="roam-colour"
-                  value="blue"
-                  data-colour-image="assets/roam-blue.png"
-                  data-colour-name="Baby Blue"
-                  data-colour-alt="Baby Blue Roamboard travel powerboard"
-                  data-colour-copy="Soft, fresh and calm. For organised travellers and camera people."
-                />
-                <span></span>
-                <small>Baby Blue</small>
-              </label>
+            <div class="colour-preview" aria-live="polite">
+              <img
+                src="assets/roam-brown-angle.png"
+                alt="Chocolate Brown Roamboard travel powerboard angled view"
+                data-colour-preview
+              />
             </div>
-
-            <p class="colour-choice-copy" data-colour-selected-copy>
-              Warm, polished and quietly expensive. For the overpacker with taste.
+            <p class="colourways-copy" aria-live="polite">
+              Choose from three stunning colours with colour-coordinated cords.
+              <span data-colour-selected-sentence>Shown in Chocolate</span>.
             </p>
+            <div class="colour-swatch-actions">
+              <div class="colour-swatch-selector" role="radiogroup" aria-label="Choose Roamboard colour">
+                <label class="colour-swatch brown is-selected" aria-label="Chocolate Brown">
+                  <input
+                    type="radio"
+                    name="roam-colour"
+                    value="brown"
+                    checked
+                    data-colour-image="assets/roam-brown-angle.png"
+                    data-colour-name="Chocolate Brown"
+                    data-colour-display="Chocolate"
+                    data-colour-alt="Chocolate Brown Roamboard travel powerboard angled view"
+                    data-colour-copy="Warm, polished and quietly expensive. For the overpacker with taste."
+                  />
+                  <span></span>
+                </label>
+
+                <label class="colour-swatch orange" aria-label="Cosmic Orange">
+                  <input
+                    type="radio"
+                    name="roam-colour"
+                    value="orange"
+                    data-colour-image="assets/roam-orange-angle.png"
+                    data-colour-name="Cosmic Orange"
+                    data-colour-display="Cosmic Orange"
+                    data-colour-alt="Cosmic Orange Roamboard travel powerboard angled view"
+                    data-colour-copy="Loud, playful and hard to lose. For chaotic packers and bags full of cables."
+                  />
+                  <span></span>
+                </label>
+
+                <label class="colour-swatch blue" aria-label="Baby Blue">
+                  <input
+                    type="radio"
+                    name="roam-colour"
+                    value="blue"
+                    data-colour-image="assets/roam-blue-angle.png"
+                    data-colour-name="Baby Blue"
+                    data-colour-display="Baby Blue"
+                    data-colour-alt="Baby Blue Roamboard travel powerboard angled view"
+                    data-colour-copy="Soft, fresh and calm. For organised travellers and camera people."
+                  />
+                  <span></span>
+                </label>
+              </div>
+
+              <div class="colour-gallery-actions">
+                <button
+                  class="colour-gallery-arrow"
+                  type="button"
+                  data-colour-view-direction="previous"
+                  aria-label="Previous product view"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M15 6l-6 6 6 6" />
+                  </svg>
+                </button>
+                <button
+                  class="colour-gallery-arrow"
+                  type="button"
+                  data-colour-view-direction="next"
+                  aria-label="Next product view"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M9 6l6 6-6 6" />
+                  </svg>
+                </button>
+                <a class="pill-button colourways-buy order-trigger" href="#preorder">Buy now</a>
+              </div>
+            </div>
           </div>
+        </div>
+      </section>
+
+      <section class="destination-check" id="destination-check" aria-labelledby="destination-check-title">
+        <div class="destination-check-copy reveal">
+          <p class="eyebrow">Destination check</p>
+          <h2 id="destination-check-title">Check if Roamboard is compatible in your destination.</h2>
+          <p>
+            Roamboard is made for Australian plug devices in Type C, E and F wall sockets. Choose a country
+            below for a quick guide before you pack.
+          </p>
+        </div>
+        <div class="destination-bento">
+          <form class="destination-tool reveal" data-destination-tool>
+            <label for="destination-country">Destination</label>
+            <select id="destination-country" data-destination-select>
+              <option value="">Choose a country</option>
+              <option value="Austria">🇦🇹 Austria</option>
+              <option value="Belgium">🇧🇪 Belgium</option>
+              <option value="Croatia">🇭🇷 Croatia</option>
+              <option value="France">🇫🇷 France</option>
+              <option value="Germany">🇩🇪 Germany</option>
+              <option value="Greece">🇬🇷 Greece</option>
+              <option value="Indonesia">🇮🇩 Indonesia / Bali</option>
+              <option value="Italy">🇮🇹 Italy</option>
+              <option value="Japan">🇯🇵 Japan</option>
+              <option value="Morocco">🇲🇦 Morocco</option>
+              <option value="Netherlands">🇳🇱 Netherlands</option>
+              <option value="Portugal">🇵🇹 Portugal</option>
+              <option value="Singapore">🇸🇬 Singapore</option>
+              <option value="South Korea">🇰🇷 South Korea</option>
+              <option value="Spain">🇪🇸 Spain</option>
+              <option value="Thailand">🇹🇭 Thailand</option>
+              <option value="Turkey">🇹🇷 Turkey</option>
+              <option value="United Arab Emirates">🇦🇪 United Arab Emirates</option>
+              <option value="United Kingdom">🇬🇧 United Kingdom</option>
+              <option value="United States">🇺🇸 United States</option>
+              <option value="Vietnam">🇻🇳 Vietnam</option>
+            </select>
+            <div class="destination-result is-empty" data-destination-result aria-live="polite">
+              <span aria-hidden="true">?</span>
+              <p>Choose a destination to check compatibility.</p>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="adapter-banner" aria-labelledby="adapter-banner-title">
+        <img
+          src="assets/roam-destination-duo.png"
+          alt="Cosmic Orange and Chocolate Brown Roamboard powerboards held up with European plugs"
+        />
+        <div class="adapter-banner-copy reveal">
+          <h2 id="adapter-banner-title">Goodbye fugly adapters.</h2>
+          <p>Make your travel set-up feel like home.</p>
         </div>
       </section>
 
@@ -147,8 +213,8 @@
           <p class="eyebrow">Travel Powerboard for Australians Overseas</p>
           <h2 id="seo-intro-title">One socket. Too many devices. Too many tiny annoyances.</h2>
           <p>
-            Roamboard is a compact Australian travel powerboard for people who need a more reliable way to
-            charge phones, laptops, cameras, headphones and everything else from one awkward overseas socket.
+            Roamboard is a compact Australian travel powerboard for Europe, Indonesia, Bali, South Korea,
+            Morocco, Egypt and other Type C, E and F socket destinations.
           </p>
         </div>
         <div class="seo-points">
@@ -202,7 +268,7 @@
           </article>
 
           <article class="highlight-card dark reveal">
-            <span class="metric">1.8 m</span>
+            <span class="metric">1 m</span>
             <p>More reach when the only wall socket is nowhere near the bed, desk or your gear.</p>
           </article>
 
@@ -248,40 +314,6 @@
             <h3>Expats</h3>
             <p>A cleaner way to keep using Australian plug devices overseas without a drawer of loose adapters.</p>
           </article>
-        </div>
-      </section>
-
-      <section class="design" id="design" aria-labelledby="design-title">
-        <div class="design-copy reveal">
-          <p class="eyebrow">Design</p>
-          <h2 id="design-title">Reliable power for the annoying parts of travel.</h2>
-          <p>
-            Roamboard is designed for the moments that make travel charging frustrating: short cables,
-            badly placed sockets, too many devices and not enough usable inputs.
-          </p>
-        </div>
-
-        <div class="closer-look">
-          <div class="sticky-product">
-            <img src="assets/powerboard-detail.png" alt="Close detail of Roamboard outlets and USB-C ports" />
-          </div>
-          <div class="spec-list" aria-label="Powerboard specifications">
-            <article class="spec reveal">
-              <span>01</span>
-              <h3>Reach the socket.</h3>
-              <p>Use the cord to move your charging setup closer to the bed, desk or gear instead of crowding the wall.</p>
-            </article>
-            <article class="spec reveal">
-              <span>02</span>
-              <h3>Keep one extra input spare.</h3>
-              <p>Three AU sockets and two USB-C ports give you more room for the device you forgot needed charging.</p>
-            </article>
-            <article class="spec reveal">
-              <span>03</span>
-              <h3>Use it where travel actually happens.</h3>
-              <p>Hotels, Airbnbs, share houses, studios and temporary rooms where sockets are rarely in the right place.</p>
-            </article>
-          </div>
         </div>
       </section>
 
@@ -358,65 +390,155 @@
             <p>No. Roamboard is not a voltage converter. Always check that your device supports the voltage and frequency of the country you are travelling to before plugging it in.</p>
           </details>
           <details class="reveal">
+            <summary>How long is the cable?</summary>
+            <p>The cable is 1 m long, giving you more reach than a wall adapter without making the board annoying to pack.</p>
+          </details>
+          <details class="reveal">
+            <summary>How much does Roamboard cost?</summary>
+            <p>Roamboard is A$89.95.</p>
+          </details>
+          <details class="reveal">
+            <summary>Can I use it in the UK, USA or Japan?</summary>
+            <p>Not directly. Those destinations use different socket types, so you would need the correct adapter or a different version of the board.</p>
+          </details>
+          <details class="reveal">
+            <summary>Can I plug in high-power appliances?</summary>
+            <p>Roamboard is intended for everyday travel tech like phones, laptops, camera gear, headphones and chargers. Avoid high-power appliances such as hair dryers, kettles and heaters unless the device and local power rating are clearly supported.</p>
+          </details>
+          <details class="reveal">
             <summary>Will I be charged today?</summary>
             <p>No. Completing the pre-order form records your interest only. We will email you before orders open and before any payment is taken.</p>
           </details>
         </div>
       </section>
 
-      <section class="preorder" id="preorder" aria-labelledby="preorder-title">
-        <div class="preorder-copy reveal">
-          <p class="eyebrow">Pre-order</p>
-          <h2 id="preorder-title">Get your hands on Roamboard</h2>
-          <p>Choose your colour, tell us how Roamboard fits into your travel setup, and we will keep you close to the front of the list.</p>
-        </div>
-
-        <form class="preorder-form reveal" id="preorder-form">
-          <div class="field">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" autocomplete="name" required />
-          </div>
-          <div class="field">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" autocomplete="email" required />
-          </div>
-          <div class="field">
-            <label for="phone">Phone</label>
-            <input id="phone" name="phone" type="tel" autocomplete="tel" />
-          </div>
-          <div class="field">
-            <label for="colour">Colour</label>
-            <select id="colour" name="colour">
-              <option>Chocolate Brown</option>
-              <option>Cosmic Orange</option>
-              <option>Baby Blue</option>
-            </select>
-          </div>
-          <div class="field full">
-            <label for="use">What would you mainly use Roamboard for?</label>
-            <select id="use" name="use">
-              <option>Regular personal travel</option>
-              <option>Work-related travel</option>
-              <option>Creative work or production</option>
-              <option>Tech work or digital nomad setup</option>
-              <option>Business travel</option>
-              <option>Living overseas or expat setup</option>
-              <option>Couple, family or group travel</option>
-            </select>
-          </div>
-          <button class="pill-button submit" type="submit">Buy now</button>
-          <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
-        </form>
-      </section>
     </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <a class="footer-logo" href="index.html#top">Roamboard</a>
+        <p>Made in Melbourne for Australians abroad.</p>
+      </div>
+
+      <nav class="footer-links" aria-label="Footer navigation">
+        <div>
+          <h2>Product</h2>
+          <a href="index.html#colourways">Colourways</a>
+          <a href="compatibility.html">Compatibility</a>
+          <a href="index.html#highlights">Highlights</a>
+          <a href="index.html#faq-title">FAQ</a>
+        </div>
+        <div>
+          <h2>Support</h2>
+          <a href="shipping.html">Shipping</a>
+          <a href="returns.html">Returns</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div>
+          <h2>Company</h2>
+          <a href="about.html">About</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+        </div>
+      </nav>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Roamboard. All rights reserved.</p>
+        <a href="mailto:hello@roamboard.com.au">hello@roamboard.com.au</a>
+      </div>
+    </footer>
 
     <div class="stock-modal" id="stock-modal" hidden>
       <div class="stock-modal-backdrop" data-stock-cancel></div>
       <section class="stock-dialog" role="dialog" aria-modal="true" aria-labelledby="stock-title" aria-describedby="stock-copy" tabindex="-1">
         <div class="stock-image-panel">
-          <img src="assets/roam-colour-lineup.png" alt="Roamboard colour options in brown, orange and blue" />
+          <img
+            src="assets/roam-modal-hanging-colourways.png"
+            alt="Chocolate Brown, Baby Blue and Cosmic Orange Roamboard powerboards hanging by their cords"
+          />
         </div>
         <div class="stock-content">
+          <form class="stock-details" id="checkout-form">
+            <p class="eyebrow">Buy Roamboard</p>
+            <h2>Choose your board.</h2>
+            <p>
+              Enter your details, choose a colour and quantity, then we'll check stock for you.
+            </p>
+
+            <div class="checkout-fields">
+              <div class="field">
+                <label for="checkout-name">Name</label>
+                <input id="checkout-name" name="name" type="text" autocomplete="name" required />
+              </div>
+              <div class="field">
+                <label for="checkout-email">Email</label>
+                <input id="checkout-email" name="email" type="email" autocomplete="email" required />
+              </div>
+              <div class="field">
+                <label for="checkout-phone">Phone</label>
+                <input id="checkout-phone" name="phone" type="tel" autocomplete="tel" />
+              </div>
+              <div class="field checkout-colour-field">
+                <span class="field-label">Colour</span>
+                <div class="colour-swatch-selector checkout-swatch-selector" role="radiogroup" aria-label="Choose checkout colour">
+                  <label class="colour-swatch brown is-selected" aria-label="Chocolate Brown">
+                    <input
+                      type="radio"
+                      name="colour"
+                      value="Chocolate Brown"
+                      checked
+                      data-colour-value="brown"
+                      data-colour-name="Chocolate Brown"
+                      data-colour-display="Chocolate"
+                    />
+                    <span></span>
+                  </label>
+                  <label class="colour-swatch orange" aria-label="Cosmic Orange">
+                    <input
+                      type="radio"
+                      name="colour"
+                      value="Cosmic Orange"
+                      data-colour-value="orange"
+                      data-colour-name="Cosmic Orange"
+                      data-colour-display="Cosmic Orange"
+                    />
+                    <span></span>
+                  </label>
+                  <label class="colour-swatch blue" aria-label="Baby Blue">
+                    <input
+                      type="radio"
+                      name="colour"
+                      value="Baby Blue"
+                      data-colour-value="blue"
+                      data-colour-name="Baby Blue"
+                      data-colour-display="Baby Blue"
+                    />
+                    <span></span>
+                  </label>
+                </div>
+              </div>
+              <div class="field">
+                <label for="checkout-quantity">Quantity</label>
+                <input id="checkout-quantity" name="quantity" type="number" inputmode="numeric" min="1" max="10" value="1" required />
+              </div>
+              <div class="field">
+                <label for="checkout-use">Main use</label>
+                <select id="checkout-use" name="use">
+                  <option>Regular personal travel</option>
+                  <option>Work-related travel</option>
+                  <option>Creative work or production</option>
+                  <option>Tech work or digital nomad setup</option>
+                  <option>Business travel</option>
+                  <option>Living overseas or expat setup</option>
+                  <option>Couple, family or group travel</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="pill-button submit" type="submit">Buy now</button>
+            <p class="form-note" id="checkout-note" role="status" aria-live="polite"></p>
+          </form>
+
           <div class="stock-checking" aria-live="polite">
             <p class="eyebrow">Checking stock</p>
             <h2>Looking for Roamboard.</h2>
@@ -440,7 +562,7 @@
               Pre-order to save your spot in the queue so you get first access to the next batch. You'll also be notified about shipping dates and any other status updates so you can know when to expect your Roamboard. No deposit required and you can cancel any time so you've got nothing to lose if you change your mind.
             </p>
             <div class="stock-actions">
-              <button class="pill-button" type="button" id="stock-confirm">Pre-order</button>
+              <button class="pill-button" type="button" id="stock-confirm">Confirm pre-order</button>
               <button class="ghost-cancel" type="button" data-stock-cancel>Cancel</button>
             </div>
           </div>
@@ -469,6 +591,6 @@
       </section>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=preorder-button-copy-1"></script>
   </body>
 </html>
