@@ -780,6 +780,16 @@ select {
   height: 100%;
 }
 
+.landing-hero-media picture,
+.colour-collection picture,
+.adapter-banner picture,
+.travel-hero-image picture,
+.stock-image-panel picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .landing-hero-media img {
   object-fit: cover;
   object-position: center bottom;
@@ -1247,10 +1257,14 @@ select {
   background: #f8f3f1;
 }
 
+.adapter-banner picture,
 .adapter-banner img {
   width: 100%;
   height: 100%;
   display: block;
+}
+
+.adapter-banner img {
   object-fit: cover;
   object-position: center;
 }

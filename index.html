@@ -19,7 +19,7 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=mobile-hero-gap-2" />
+    <link rel="stylesheet" href="styles.css?v=image-opt-1" />
   </head>
   <body>
     <nav class="product-nav" aria-label="Product navigation">
@@ -35,10 +35,33 @@
       <section class="hero product-hero" aria-labelledby="hero-title">
         <div class="landing-hero-shell">
           <div class="landing-hero-media reveal" aria-label="Roamboard lifestyle hero image">
-            <img
-              src="assets/roam-hero-background-wide.png?v=1"
-              alt="Person holding the baby blue Roamboard powerboard with its braided cord and European plug"
-            />
+            <picture>
+              <source
+                type="image/webp"
+                srcset="
+                  assets/optimized/roam-hero-background-wide-960w.webp 960w,
+                  assets/optimized/roam-hero-background-wide-1440w.webp 1440w,
+                  assets/optimized/roam-hero-background-wide-1920w.webp 1920w,
+                  assets/optimized/roam-hero-background-wide-2560w.webp 2560w
+                "
+                sizes="100vw"
+              />
+              <img
+                src="assets/optimized/roam-hero-background-wide-1920w.jpg"
+                srcset="
+                  assets/optimized/roam-hero-background-wide-960w.jpg 960w,
+                  assets/optimized/roam-hero-background-wide-1440w.jpg 1440w,
+                  assets/optimized/roam-hero-background-wide-1920w.jpg 1920w,
+                  assets/optimized/roam-hero-background-wide-2560w.jpg 2560w
+                "
+                sizes="100vw"
+                width="8084"
+                height="4572"
+                fetchpriority="high"
+                decoding="async"
+                alt="Person holding the baby blue Roamboard powerboard with its braided cord and European plug"
+              />
+            </picture>
           </div>
 
           <div class="landing-hero-copy hero-copy-top reveal">
@@ -61,16 +84,39 @@
 
         <div class="colour-picker reveal" data-colour-picker>
           <div class="colour-collection">
-            <img
-              src="assets/roam-colourways-set.png"
-              alt="Roamboard travel powerboards in Chocolate Brown, Cosmic Orange and Baby Blue"
-            />
+            <picture>
+              <source
+                type="image/webp"
+                srcset="
+                  assets/optimized/roam-colourways-set-720w.webp 720w,
+                  assets/optimized/roam-colourways-set-1200w.webp 1200w
+                "
+                sizes="(max-width: 900px) min(100vw - 36px, 680px), 540px"
+              />
+              <img
+                src="assets/optimized/roam-colourways-set-1200w.jpg"
+                srcset="
+                  assets/optimized/roam-colourways-set-720w.jpg 720w,
+                  assets/optimized/roam-colourways-set-1200w.jpg 1200w
+                "
+                sizes="(max-width: 900px) min(100vw - 36px, 680px), 540px"
+                width="1448"
+                height="1086"
+                loading="lazy"
+                decoding="async"
+                alt="Roamboard travel powerboards in Chocolate Brown, Cosmic Orange and Baby Blue"
+              />
+            </picture>
           </div>
 
           <div class="colour-controls">
             <div class="colour-preview" aria-live="polite">
               <img
-                src="assets/roam-brown-angle.png"
+                src="assets/optimized/roam-brown-angle-1120w.webp"
+                width="1122"
+                height="1402"
+                loading="lazy"
+                decoding="async"
                 alt="Chocolate Brown Roamboard travel powerboard angled view"
                 data-colour-preview
               />
@@ -87,7 +133,7 @@
                     name="roam-colour"
                     value="brown"
                     checked
-                    data-colour-image="assets/roam-brown-angle.png"
+                    data-colour-image="assets/optimized/roam-brown-angle-1120w.webp"
                     data-colour-name="Chocolate Brown"
                     data-colour-display="Chocolate"
                     data-colour-alt="Chocolate Brown Roamboard travel powerboard angled view"
@@ -101,7 +147,7 @@
                     type="radio"
                     name="roam-colour"
                     value="orange"
-                    data-colour-image="assets/roam-orange-angle.png"
+                    data-colour-image="assets/optimized/roam-orange-angle-1120w.webp"
                     data-colour-name="Cosmic Orange"
                     data-colour-display="Cosmic Orange"
                     data-colour-alt="Cosmic Orange Roamboard travel powerboard angled view"
@@ -115,7 +161,7 @@
                     type="radio"
                     name="roam-colour"
                     value="blue"
-                    data-colour-image="assets/roam-blue-angle.png"
+                    data-colour-image="assets/optimized/roam-blue-angle-1120w.webp"
                     data-colour-name="Baby Blue"
                     data-colour-display="Baby Blue"
                     data-colour-alt="Baby Blue Roamboard travel powerboard angled view"
@@ -198,10 +244,29 @@
       </section>
 
       <section class="adapter-banner" aria-labelledby="adapter-banner-title">
-        <img
-          src="assets/roam-destination-duo.png"
-          alt="Cosmic Orange and Chocolate Brown Roamboard powerboards held up with European plugs"
-        />
+        <picture>
+          <source
+            type="image/webp"
+            srcset="
+              assets/optimized/roam-destination-duo-720w.webp 720w,
+              assets/optimized/roam-destination-duo-1200w.webp 1200w
+            "
+            sizes="100vw"
+          />
+          <img
+            src="assets/optimized/roam-destination-duo-1200w.jpg"
+            srcset="
+              assets/optimized/roam-destination-duo-720w.jpg 720w,
+              assets/optimized/roam-destination-duo-1200w.jpg 1200w
+            "
+            sizes="100vw"
+            width="1448"
+            height="1086"
+            loading="lazy"
+            decoding="async"
+            alt="Cosmic Orange and Chocolate Brown Roamboard powerboards held up with European plugs"
+          />
+        </picture>
         <div class="adapter-banner-copy reveal">
           <h2 id="adapter-banner-title">Goodbye fugly adapters.</h2>
           <p>Make your travel set-up feel like home.</p>
@@ -239,9 +304,30 @@
 
       <section class="film-strip" aria-label="Product details">
         <div class="film-track">
-          <img src="assets/powerboard-detail.png" alt="Close view of the outlets and USB-C ports" />
-          <img src="assets/powerboard-top.png" alt="Top view of Roamboard with braided cable looped around it" />
-          <img src="assets/powerboard-hero.png" alt="Angled view of Roamboard and its plug" />
+          <img
+            src="assets/optimized/powerboard-detail-1120w.webp"
+            width="1122"
+            height="1402"
+            loading="lazy"
+            decoding="async"
+            alt="Close view of the outlets and USB-C ports"
+          />
+          <img
+            src="assets/optimized/powerboard-top-1120w.webp"
+            width="1122"
+            height="1402"
+            loading="lazy"
+            decoding="async"
+            alt="Top view of Roamboard with braided cable looped around it"
+          />
+          <img
+            src="assets/optimized/powerboard-hero-1120w.webp"
+            width="1122"
+            height="1402"
+            loading="lazy"
+            decoding="async"
+            alt="Angled view of Roamboard and its plug"
+          />
         </div>
       </section>
 
@@ -258,7 +344,14 @@
 
         <div class="highlight-grid">
           <article class="highlight-card large media-card reveal">
-            <img src="assets/powerboard-top.png" alt="Top-down product view showing three AU outlets and two USB-C ports" />
+            <img
+              src="assets/optimized/powerboard-top-1120w.webp"
+              width="1122"
+              height="1402"
+              loading="lazy"
+              decoding="async"
+              alt="Top-down product view showing three AU outlets and two USB-C ports"
+            />
             <p>One board. Power for your whole travel set-up.</p>
           </article>
 
@@ -286,10 +379,31 @@
         </div>
 
         <figure class="travel-hero-image reveal">
-          <img
-            src="assets/musician-studio.png"
-            alt="Musician working with a laptop, audio gear and Roamboard on a studio table"
-          />
+          <picture>
+            <source
+              type="image/webp"
+              srcset="
+                assets/optimized/musician-studio-720w.webp 720w,
+                assets/optimized/musician-studio-1200w.webp 1200w,
+                assets/optimized/musician-studio-1920w.webp 1920w
+              "
+              sizes="(max-width: 620px) 100vw, calc(100vw - 36px)"
+            />
+            <img
+              src="assets/optimized/musician-studio-1200w.jpg"
+              srcset="
+                assets/optimized/musician-studio-720w.jpg 720w,
+                assets/optimized/musician-studio-1200w.jpg 1200w,
+                assets/optimized/musician-studio-1920w.jpg 1920w
+              "
+              sizes="(max-width: 620px) 100vw, calc(100vw - 36px)"
+              width="3967"
+              height="2276"
+              loading="lazy"
+              decoding="async"
+              alt="Musician working with a laptop, audio gear and Roamboard on a studio table"
+            />
+          </picture>
           <figcaption>
             <p class="eyebrow">Studio setup</p>
             <h3>Power where the work lands.</h3>
@@ -319,14 +433,28 @@
 
       <section class="use-cases" aria-label="Use cases">
         <article class="use-card reveal">
-          <img src="assets/powerboard-top.png" alt="Roamboard arranged for a workspace setup" />
+          <img
+            src="assets/optimized/powerboard-top-1120w.webp"
+            width="1122"
+            height="1402"
+            loading="lazy"
+            decoding="async"
+            alt="Roamboard arranged for a workspace setup"
+          />
           <div>
             <p class="eyebrow">Workspace</p>
             <h3>One clean anchor for your desk.</h3>
           </div>
         </article>
         <article class="use-card reveal">
-          <img src="assets/powerboard-detail.png" alt="Roamboard close detail for bedside charging" />
+          <img
+            src="assets/optimized/powerboard-detail-1120w.webp"
+            width="1122"
+            height="1402"
+            loading="lazy"
+            decoding="async"
+            alt="Roamboard close detail for bedside charging"
+          />
           <div>
             <p class="eyebrow">Home</p>
             <h3>Power that belongs in the room.</h3>
@@ -455,10 +583,29 @@
       <div class="stock-modal-backdrop" data-stock-cancel></div>
       <section class="stock-dialog" role="dialog" aria-modal="true" aria-labelledby="stock-title" aria-describedby="stock-copy" tabindex="-1">
         <div class="stock-image-panel">
-          <img
-            src="assets/roam-modal-hanging-colourways.png"
-            alt="Chocolate Brown, Baby Blue and Cosmic Orange Roamboard powerboards hanging by their cords"
-          />
+          <picture>
+            <source
+              type="image/webp"
+              srcset="
+                assets/optimized/roam-modal-hanging-colourways-720w.webp 720w,
+                assets/optimized/roam-modal-hanging-colourways-1200w.webp 1200w
+              "
+              sizes="(max-width: 620px) 100vw, 440px"
+            />
+            <img
+              src="assets/optimized/roam-modal-hanging-colourways-1200w.jpg"
+              srcset="
+                assets/optimized/roam-modal-hanging-colourways-720w.jpg 720w,
+                assets/optimized/roam-modal-hanging-colourways-1200w.jpg 1200w
+              "
+              sizes="(max-width: 620px) 100vw, 440px"
+              width="1536"
+              height="1024"
+              loading="lazy"
+              decoding="async"
+              alt="Chocolate Brown, Baby Blue and Cosmic Orange Roamboard powerboards hanging by their cords"
+            />
+          </picture>
         </div>
         <div class="stock-content">
           <form class="stock-details" id="checkout-form">
@@ -594,6 +741,6 @@
       </section>
     </div>
 
-    <script src="script.js?v=preorder-button-copy-1"></script>
+    <script src="script.js?v=image-opt-1"></script>
   </body>
 </html>

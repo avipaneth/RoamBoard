@@ -1,0 +1,718 @@
+[
+  {
+    "source": "roam-hero-background-wide.png",
+    "sourceSize": 9831119,
+    "width": 8084,
+    "height": 4572,
+    "outputs": [
+      {
+        "file": "roam-hero-background-wide-960w.webp",
+        "size": 10896,
+        "sizeLabel": "10.6 KB"
+      },
+      {
+        "file": "roam-hero-background-wide-960w.jpg",
+        "size": 14618,
+        "sizeLabel": "14.3 KB"
+      },
+      {
+        "file": "roam-hero-background-wide-1440w.webp",
+        "size": 23288,
+        "sizeLabel": "22.7 KB"
+      },
+      {
+        "file": "roam-hero-background-wide-1440w.jpg",
+        "size": 27174,
+        "sizeLabel": "26.5 KB"
+      },
+      {
+        "file": "roam-hero-background-wide-1920w.webp",
+        "size": 35240,
+        "sizeLabel": "34.4 KB"
+      },
+      {
+        "file": "roam-hero-background-wide-1920w.jpg",
+        "size": 41830,
+        "sizeLabel": "40.8 KB"
+      },
+      {
+        "file": "roam-hero-background-wide-2560w.webp",
+        "size": 197696,
+        "sizeLabel": "193.1 KB"
+      },
+      {
+        "file": "roam-hero-background-wide-2560w.jpg",
+        "size": 64814,
+        "sizeLabel": "63.3 KB"
+      }
+    ],
+    "sourceSizeLabel": "9.38 MB"
+  },
+  {
+    "source": "roam-colourways-set.png",
+    "sourceSize": 2084315,
+    "width": 1448,
+    "height": 1086,
+    "outputs": [
+      {
+        "file": "roam-colourways-set-720w.webp",
+        "size": 26650,
+        "sizeLabel": "26.0 KB"
+      },
+      {
+        "file": "roam-colourways-set-720w.jpg",
+        "size": 34605,
+        "sizeLabel": "33.8 KB"
+      },
+      {
+        "file": "roam-colourways-set-1200w.webp",
+        "size": 57204,
+        "sizeLabel": "55.9 KB"
+      },
+      {
+        "file": "roam-colourways-set-1200w.jpg",
+        "size": 77721,
+        "sizeLabel": "75.9 KB"
+      }
+    ],
+    "sourceSizeLabel": "1.99 MB"
+  },
+  {
+    "source": "roam-colour-lineup.png",
+    "sourceSize": 2219160,
+    "width": 1448,
+    "height": 1086,
+    "outputs": [
+      {
+        "file": "roam-colour-lineup-720w.webp",
+        "size": 25422,
+        "sizeLabel": "24.8 KB"
+      },
+      {
+        "file": "roam-colour-lineup-720w.jpg",
+        "size": 33966,
+        "sizeLabel": "33.2 KB"
+      },
+      {
+        "file": "roam-colour-lineup-1200w.webp",
+        "size": 55556,
+        "sizeLabel": "54.3 KB"
+      },
+      {
+        "file": "roam-colour-lineup-1200w.jpg",
+        "size": 77306,
+        "sizeLabel": "75.5 KB"
+      }
+    ],
+    "sourceSizeLabel": "2.12 MB"
+  },
+  {
+    "source": "roam-destination-duo.png",
+    "sourceSize": 1604537,
+    "width": 1448,
+    "height": 1086,
+    "outputs": [
+      {
+        "file": "roam-destination-duo-720w.webp",
+        "size": 16046,
+        "sizeLabel": "15.7 KB"
+      },
+      {
+        "file": "roam-destination-duo-720w.jpg",
+        "size": 23537,
+        "sizeLabel": "23.0 KB"
+      },
+      {
+        "file": "roam-destination-duo-1200w.webp",
+        "size": 33394,
+        "sizeLabel": "32.6 KB"
+      },
+      {
+        "file": "roam-destination-duo-1200w.jpg",
+        "size": 49824,
+        "sizeLabel": "48.7 KB"
+      }
+    ],
+    "sourceSizeLabel": "1.53 MB"
+  },
+  {
+    "source": "roam-destination-portrait.png",
+    "sourceSize": 1999156,
+    "width": 1081,
+    "height": 1455,
+    "outputs": [
+      {
+        "file": "roam-destination-portrait-720w.webp",
+        "size": 29032,
+        "sizeLabel": "28.4 KB"
+      },
+      {
+        "file": "roam-destination-portrait-720w.jpg",
+        "size": 43333,
+        "sizeLabel": "42.3 KB"
+      }
+    ],
+    "sourceSizeLabel": "1.91 MB"
+  },
+  {
+    "source": "roam-modal-hanging-colourways.png",
+    "sourceSize": 1850044,
+    "width": 1536,
+    "height": 1024,
+    "outputs": [
+      {
+        "file": "roam-modal-hanging-colourways-720w.webp",
+        "size": 11622,
+        "sizeLabel": "11.3 KB"
+      },
+      {
+        "file": "roam-modal-hanging-colourways-720w.jpg",
+        "size": 16813,
+        "sizeLabel": "16.4 KB"
+      },
+      {
+        "file": "roam-modal-hanging-colourways-1200w.webp",
+        "size": 28054,
+        "sizeLabel": "27.4 KB"
+      },
+      {
+        "file": "roam-modal-hanging-colourways-1200w.jpg",
+        "size": 37331,
+        "sizeLabel": "36.5 KB"
+      }
+    ],
+    "sourceSizeLabel": "1.76 MB"
+  },
+  {
+    "source": "musician-studio.png",
+    "sourceSize": 4759388,
+    "width": 3967,
+    "height": 2276,
+    "outputs": [
+      {
+        "file": "musician-studio-720w.webp",
+        "size": 19294,
+        "sizeLabel": "18.8 KB"
+      },
+      {
+        "file": "musician-studio-720w.jpg",
+        "size": 29912,
+        "sizeLabel": "29.2 KB"
+      },
+      {
+        "file": "musician-studio-1200w.webp",
+        "size": 35898,
+        "sizeLabel": "35.1 KB"
+      },
+      {
+        "file": "musician-studio-1200w.jpg",
+        "size": 62616,
+        "sizeLabel": "61.1 KB"
+      },
+      {
+        "file": "musician-studio-1920w.webp",
+        "size": 61812,
+        "sizeLabel": "60.4 KB"
+      },
+      {
+        "file": "musician-studio-1920w.jpg",
+        "size": 121849,
+        "sizeLabel": "119.0 KB"
+      }
+    ],
+    "sourceSizeLabel": "4.54 MB"
+  },
+  {
+    "source": "powerboard-detail.png",
+    "sourceSize": 1925618,
+    "width": 1122,
+    "height": 1402,
+    "outputs": [
+      {
+        "file": "powerboard-detail-720w.webp",
+        "size": 23962,
+        "sizeLabel": "23.4 KB"
+      },
+      {
+        "file": "powerboard-detail-720w.jpg",
+        "size": 40135,
+        "sizeLabel": "39.2 KB"
+      },
+      {
+        "file": "powerboard-detail-1120w.webp",
+        "size": 43828,
+        "sizeLabel": "42.8 KB"
+      },
+      {
+        "file": "powerboard-detail-1120w.jpg",
+        "size": 81351,
+        "sizeLabel": "79.4 KB"
+      }
+    ],
+    "sourceSizeLabel": "1.84 MB"
+  },
+  {
+    "source": "powerboard-top.png",
+    "sourceSize": 2178327,
+    "width": 1122,
+    "height": 1402,
+    "outputs": [
+      {
+        "file": "powerboard-top-720w.webp",
+        "size": 38446,
+        "sizeLabel": "37.5 KB"
+      },
+      {
+        "file": "powerboard-top-720w.jpg",
+        "size": 49743,
+        "sizeLabel": "48.6 KB"
+      },
+      {
+        "file": "powerboard-top-1120w.webp",
+        "size": 76398,
+        "sizeLabel": "74.6 KB"
+      },
+      {
+        "file": "powerboard-top-1120w.jpg",
+        "size": 108833,
+        "sizeLabel": "106.3 KB"
+      }
+    ],
+    "sourceSizeLabel": "2.08 MB"
+  },
+  {
+    "source": "powerboard-hero.png",
+    "sourceSize": 1715235,
+    "width": 1122,
+    "height": 1402,
+    "outputs": [
+      {
+        "file": "powerboard-hero-720w.webp",
+        "size": 21580,
+        "sizeLabel": "21.1 KB"
+      },
+      {
+        "file": "powerboard-hero-720w.jpg",
+        "size": 33286,
+        "sizeLabel": "32.5 KB"
+      },
+      {
+        "file": "powerboard-hero-1120w.webp",
+        "size": 38172,
+        "sizeLabel": "37.3 KB"
+      },
+      {
+        "file": "powerboard-hero-1120w.jpg",
+        "size": 64390,
+        "sizeLabel": "62.9 KB"
+      }
+    ],
+    "sourceSizeLabel": "1.64 MB"
+  },
+  {
+    "source": "roam-brown-angle.png",
+    "sourceSize": 1715235,
+    "width": 1122,
+    "height": 1402,
+    "outputs": [
+      {
+        "file": "roam-brown-angle-720w.webp",
+        "size": 21580,
+        "sizeLabel": "21.1 KB"
+      },
+      {
+        "file": "roam-brown-angle-720w.jpg",
+        "size": 33286,
+        "sizeLabel": "32.5 KB"
+      },
+      {
+        "file": "roam-brown-angle-1120w.webp",
+        "size": 38172,
+        "sizeLabel": "37.3 KB"
+      },
+      {
+        "file": "roam-brown-angle-1120w.jpg",
+        "size": 64390,
+        "sizeLabel": "62.9 KB"
+      }
+    ],
+    "sourceSizeLabel": "1.64 MB"
+  },
+  {
+    "source": "roam-brown-top.png",
+    "sourceSize": 2178327,
+    "width": 1122,
+    "height": 1402,
+    "outputs": [
+      {
+        "file": "roam-brown-top-720w.webp",
+        "size": 38446,
+        "sizeLabel": "37.5 KB"
+      },
+      {
+        "file": "roam-brown-top-720w.jpg",
+        "size": 49743,
+        "sizeLabel": "48.6 KB"
+      },
+      {
+        "file": "roam-brown-top-1120w.webp",
+        "size": 76398,
+        "sizeLabel": "74.6 KB"
+      },
+      {
+        "file": "roam-brown-top-1120w.jpg",
+        "size": 108833,
+        "sizeLabel": "106.3 KB"
+      }
+    ],
+    "sourceSizeLabel": "2.08 MB"
+  },
+  {
+    "source": "roam-brown-detail.png",
+    "sourceSize": 1925618,
+    "width": 1122,
+    "height": 1402,
+    "outputs": [
+      {
+        "file": "roam-brown-detail-720w.webp",
+        "size": 23962,
+        "sizeLabel": "23.4 KB"
+      },
+      {
+        "file": "roam-brown-detail-720w.jpg",
+        "size": 40135,
+        "sizeLabel": "39.2 KB"
+      },
+      {
+        "file": "roam-brown-detail-1120w.webp",
+        "size": 43828,
+        "sizeLabel": "42.8 KB"
+      },
+      {
+        "file": "roam-brown-detail-1120w.jpg",
+        "size": 81351,
+        "sizeLabel": "79.4 KB"
+      }
+    ],
+    "sourceSizeLabel": "1.84 MB"
+  },
+  {
+    "source": "roam-orange-angle.png",
+    "sourceSize": 1667121,
+    "width": 1122,
+    "height": 1402,
+    "outputs": [
+      {
+        "file": "roam-orange-angle-720w.webp",
+        "size": 26658,
+        "sizeLabel": "26.0 KB"
+      },
+      {
+        "file": "roam-orange-angle-720w.jpg",
+        "size": 39335,
+        "sizeLabel": "38.4 KB"
+      },
+      {
+        "file": "roam-orange-angle-1120w.webp",
+        "size": 45302,
+        "sizeLabel": "44.2 KB"
+      },
+      {
+        "file": "roam-orange-angle-1120w.jpg",
+        "size": 73971,
+        "sizeLabel": "72.2 KB"
+      }
+    ],
+    "sourceSizeLabel": "1.59 MB"
+  },
+  {
+    "source": "roam-orange-top.png",
+    "sourceSize": 1697768,
+    "width": 1122,
+    "height": 1402,
+    "outputs": [
+      {
+        "file": "roam-orange-top-720w.webp",
+        "size": 46496,
+        "sizeLabel": "45.4 KB"
+      },
+      {
+        "file": "roam-orange-top-720w.jpg",
+        "size": 56800,
+        "sizeLabel": "55.5 KB"
+      },
+      {
+        "file": "roam-orange-top-1120w.webp",
+        "size": 87958,
+        "sizeLabel": "85.9 KB"
+      },
+      {
+        "file": "roam-orange-top-1120w.jpg",
+        "size": 115018,
+        "sizeLabel": "112.3 KB"
+      }
+    ],
+    "sourceSizeLabel": "1.62 MB"
+  },
+  {
+    "source": "roam-orange-detail.png",
+    "sourceSize": 1935520,
+    "width": 1122,
+    "height": 1402,
+    "outputs": [
+      {
+        "file": "roam-orange-detail-720w.webp",
+        "size": 32400,
+        "sizeLabel": "31.6 KB"
+      },
+      {
+        "file": "roam-orange-detail-720w.jpg",
+        "size": 50155,
+        "sizeLabel": "49.0 KB"
+      },
+      {
+        "file": "roam-orange-detail-1120w.webp",
+        "size": 56092,
+        "sizeLabel": "54.8 KB"
+      },
+      {
+        "file": "roam-orange-detail-1120w.jpg",
+        "size": 94693,
+        "sizeLabel": "92.5 KB"
+      }
+    ],
+    "sourceSizeLabel": "1.85 MB"
+  },
+  {
+    "source": "roam-blue-angle.png",
+    "sourceSize": 1595427,
+    "width": 1122,
+    "height": 1402,
+    "outputs": [
+      {
+        "file": "roam-blue-angle-720w.webp",
+        "size": 17388,
+        "sizeLabel": "17.0 KB"
+      },
+      {
+        "file": "roam-blue-angle-720w.jpg",
+        "size": 29125,
+        "sizeLabel": "28.4 KB"
+      },
+      {
+        "file": "roam-blue-angle-1120w.webp",
+        "size": 28834,
+        "sizeLabel": "28.2 KB"
+      },
+      {
+        "file": "roam-blue-angle-1120w.jpg",
+        "size": 54397,
+        "sizeLabel": "53.1 KB"
+      }
+    ],
+    "sourceSizeLabel": "1.52 MB"
+  },
+  {
+    "source": "roam-blue-top.png",
+    "sourceSize": 1848216,
+    "width": 1122,
+    "height": 1402,
+    "outputs": [
+      {
+        "file": "roam-blue-top-720w.webp",
+        "size": 37972,
+        "sizeLabel": "37.1 KB"
+      },
+      {
+        "file": "roam-blue-top-720w.jpg",
+        "size": 47588,
+        "sizeLabel": "46.5 KB"
+      },
+      {
+        "file": "roam-blue-top-1120w.webp",
+        "size": 69322,
+        "sizeLabel": "67.7 KB"
+      },
+      {
+        "file": "roam-blue-top-1120w.jpg",
+        "size": 96403,
+        "sizeLabel": "94.1 KB"
+      }
+    ],
+    "sourceSizeLabel": "1.76 MB"
+  },
+  {
+    "source": "roam-blue-detail.png",
+    "sourceSize": 1763016,
+    "width": 1122,
+    "height": 1402,
+    "outputs": [
+      {
+        "file": "roam-blue-detail-720w.webp",
+        "size": 23462,
+        "sizeLabel": "22.9 KB"
+      },
+      {
+        "file": "roam-blue-detail-720w.jpg",
+        "size": 37884,
+        "sizeLabel": "37.0 KB"
+      },
+      {
+        "file": "roam-blue-detail-1120w.webp",
+        "size": 39438,
+        "sizeLabel": "38.5 KB"
+      },
+      {
+        "file": "roam-blue-detail-1120w.jpg",
+        "size": 72571,
+        "sizeLabel": "70.9 KB"
+      }
+    ],
+    "sourceSizeLabel": "1.68 MB"
+  },
+  {
+    "source": "roam-brown.png",
+    "sourceSize": 1715235,
+    "width": 1122,
+    "height": 1402,
+    "outputs": [
+      {
+        "file": "roam-brown-720w.webp",
+        "size": 21580,
+        "sizeLabel": "21.1 KB"
+      },
+      {
+        "file": "roam-brown-720w.jpg",
+        "size": 33286,
+        "sizeLabel": "32.5 KB"
+      },
+      {
+        "file": "roam-brown-1120w.webp",
+        "size": 38172,
+        "sizeLabel": "37.3 KB"
+      },
+      {
+        "file": "roam-brown-1120w.jpg",
+        "size": 64390,
+        "sizeLabel": "62.9 KB"
+      }
+    ],
+    "sourceSizeLabel": "1.64 MB"
+  },
+  {
+    "source": "roam-orange.png",
+    "sourceSize": 1667121,
+    "width": 1122,
+    "height": 1402,
+    "outputs": [
+      {
+        "file": "roam-orange-720w.webp",
+        "size": 26658,
+        "sizeLabel": "26.0 KB"
+      },
+      {
+        "file": "roam-orange-720w.jpg",
+        "size": 39335,
+        "sizeLabel": "38.4 KB"
+      },
+      {
+        "file": "roam-orange-1120w.webp",
+        "size": 45302,
+        "sizeLabel": "44.2 KB"
+      },
+      {
+        "file": "roam-orange-1120w.jpg",
+        "size": 73971,
+        "sizeLabel": "72.2 KB"
+      }
+    ],
+    "sourceSizeLabel": "1.59 MB"
+  },
+  {
+    "source": "roam-blue.png",
+    "sourceSize": 1595427,
+    "width": 1122,
+    "height": 1402,
+    "outputs": [
+      {
+        "file": "roam-blue-720w.webp",
+        "size": 17388,
+        "sizeLabel": "17.0 KB"
+      },
+      {
+        "file": "roam-blue-720w.jpg",
+        "size": 29125,
+        "sizeLabel": "28.4 KB"
+      },
+      {
+        "file": "roam-blue-1120w.webp",
+        "size": 28834,
+        "sizeLabel": "28.2 KB"
+      },
+      {
+        "file": "roam-blue-1120w.jpg",
+        "size": 54397,
+        "sizeLabel": "53.1 KB"
+      }
+    ],
+    "sourceSizeLabel": "1.52 MB"
+  },
+  {
+    "source": "roam-blue-hand-hero.png",
+    "sourceSize": 1435074,
+    "width": 1448,
+    "height": 1086,
+    "outputs": [
+      {
+        "file": "roam-blue-hand-hero-720w.webp",
+        "size": 9820,
+        "sizeLabel": "9.6 KB"
+      },
+      {
+        "file": "roam-blue-hand-hero-720w.jpg",
+        "size": 14610,
+        "sizeLabel": "14.3 KB"
+      },
+      {
+        "file": "roam-blue-hand-hero-1200w.webp",
+        "size": 21782,
+        "sizeLabel": "21.3 KB"
+      },
+      {
+        "file": "roam-blue-hand-hero-1200w.jpg",
+        "size": 31638,
+        "sizeLabel": "30.9 KB"
+      }
+    ],
+    "sourceSizeLabel": "1.37 MB"
+  },
+  {
+    "source": "roam-lifestyle-hero.png",
+    "sourceSize": 2380364,
+    "width": 1122,
+    "height": 1402,
+    "outputs": [
+      {
+        "file": "roam-lifestyle-hero-720w.webp",
+        "size": 52174,
+        "sizeLabel": "51.0 KB"
+      },
+      {
+        "file": "roam-lifestyle-hero-720w.jpg",
+        "size": 67657,
+        "sizeLabel": "66.1 KB"
+      },
+      {
+        "file": "roam-lifestyle-hero-1120w.webp",
+        "size": 110288,
+        "sizeLabel": "107.7 KB"
+      },
+      {
+        "file": "roam-lifestyle-hero-1120w.jpg",
+        "size": 149505,
+        "sizeLabel": "146.0 KB"
+      }
+    ],
+    "sourceSizeLabel": "2.27 MB"
+  }
+]

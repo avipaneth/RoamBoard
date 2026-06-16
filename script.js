@@ -42,43 +42,43 @@ const colourViewLabels = {
 const colourViewImages = {
   brown: {
     angle: {
-      src: "assets/roam-brown-angle.png",
+      src: "assets/optimized/roam-brown-angle-1120w.webp",
       alt: "Chocolate Brown Roamboard travel powerboard angled view",
     },
     top: {
-      src: "assets/roam-brown-top.png",
+      src: "assets/optimized/roam-brown-top-1120w.webp",
       alt: "Chocolate Brown Roamboard travel powerboard top view",
     },
     detail: {
-      src: "assets/roam-brown-detail.png",
+      src: "assets/optimized/roam-brown-detail-1120w.webp",
       alt: "Chocolate Brown Roamboard travel powerboard close detail",
     },
   },
   orange: {
     angle: {
-      src: "assets/roam-orange-angle.png",
+      src: "assets/optimized/roam-orange-angle-1120w.webp",
       alt: "Cosmic Orange Roamboard travel powerboard angled view",
     },
     top: {
-      src: "assets/roam-orange-top.png",
+      src: "assets/optimized/roam-orange-top-1120w.webp",
       alt: "Cosmic Orange Roamboard travel powerboard top view",
     },
     detail: {
-      src: "assets/roam-orange-detail.png",
+      src: "assets/optimized/roam-orange-detail-1120w.webp",
       alt: "Cosmic Orange Roamboard travel powerboard close detail",
     },
   },
   blue: {
     angle: {
-      src: "assets/roam-blue-angle.png",
+      src: "assets/optimized/roam-blue-angle-1120w.webp",
       alt: "Baby Blue Roamboard travel powerboard angled view",
     },
     top: {
-      src: "assets/roam-blue-top.png",
+      src: "assets/optimized/roam-blue-top-1120w.webp",
       alt: "Baby Blue Roamboard travel powerboard top view",
     },
     detail: {
-      src: "assets/roam-blue-detail.png",
+      src: "assets/optimized/roam-blue-detail-1120w.webp",
       alt: "Baby Blue Roamboard travel powerboard close detail",
     },
   },
@@ -88,13 +88,6 @@ designSpecs.forEach((spec) => {
   if (!spec.dataset.designImage) return;
   const image = new Image();
   image.src = spec.dataset.designImage;
-});
-
-Object.values(colourViewImages).forEach((views) => {
-  Object.values(views).forEach(({ src }) => {
-    const image = new Image();
-    image.src = src;
-  });
 });
 
 const destinationCompatibility = {
@@ -302,6 +295,39 @@ function getSelectedColourName() {
   return selectedColourInput.dataset.colourName || selectedColourInput.value || "Chocolate Brown";
 }
 
+function preloadImage(src) {
+  if (!src) return;
+  const image = new Image();
+  image.decoding = "async";
+  image.src = src;
+}
+
+function preloadAdjacentColourViews() {
+  if (!(selectedColourInput instanceof HTMLInputElement)) return;
+
+  const selectedColour = getColourKey(selectedColourInput);
+  const currentIndex = colourViewOrder.indexOf(selectedColourView);
+  if (!colourViewImages[selectedColour] || currentIndex < 0) return;
+
+  const adjacentViews = [
+    colourViewOrder[(currentIndex - 1 + colourViewOrder.length) % colourViewOrder.length],
+    colourViewOrder[(currentIndex + 1) % colourViewOrder.length],
+  ];
+
+  adjacentViews.forEach((viewName) => {
+    preloadImage(colourViewImages[selectedColour]?.[viewName]?.src);
+  });
+}
+
+function scheduleAdjacentColourPreload() {
+  const run = () => preloadAdjacentColourViews();
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(run, { timeout: 1200 });
+    return;
+  }
+  window.setTimeout(run, 240);
+}
+
 function syncColourSwatches(selectedKey) {
   document.querySelectorAll(".colour-swatch").forEach((label) => {
     const input = label.querySelector("input");
@@ -338,6 +364,7 @@ function updateColourPreview({ animate = true } = {}) {
     colourPreview.alt = view.alt;
     if (colourViewLabel) colourViewLabel.textContent = colourViewLabels[selectedColourView] || "Angle view";
     colourPreview.classList.remove("is-changing");
+    scheduleAdjacentColourPreload();
   };
 
   if (animate) {
