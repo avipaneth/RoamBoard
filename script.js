@@ -1,15 +1,15 @@
+import { getSupabaseClient } from "./supabaseClient.js";
+
 const doc = document.documentElement;
 const hero = document.querySelector(".hero");
 const filmStrip = document.querySelector(".film-strip");
 const filmTrack = document.querySelector(".film-track");
 const stickyImage = document.querySelector("[data-design-image-display]");
 const designSpecs = Array.from(document.querySelectorAll(".spec[data-design-image]"));
-const checkoutForm = document.querySelector("#checkout-form");
-const checkoutNote = document.querySelector("#checkout-note");
-const stockModal = document.querySelector("#stock-modal");
-const stockDialog = document.querySelector(".stock-dialog");
-const stockConfirm = document.querySelector("#stock-confirm");
-const stockCancelButtons = document.querySelectorAll("[data-stock-cancel]");
+const preorderForm = document.querySelector("#preorder-form");
+const preorderNote = document.querySelector("#preorder-note");
+const preorderSubmit = document.querySelector("#preorder-submit");
+const preorderColourSelect = document.querySelector("[data-preorder-colour]");
 const orderTriggers = document.querySelectorAll(".order-trigger");
 const colourPicker = document.querySelector("[data-colour-picker]");
 const colourPreview = document.querySelector("[data-colour-preview]");
@@ -19,20 +19,14 @@ const colourSelectedSentence = document.querySelector("[data-colour-selected-sen
 const colourViewLabel = document.querySelector("[data-colour-view-label]");
 const destinationSelect = document.querySelector("[data-destination-select]");
 const destinationResult = document.querySelector("[data-destination-result]");
-const checkoutQuantityInput = document.querySelector("#checkout-quantity");
 
-let pendingOrderData = null;
-let orderModalContext = "cta";
-let previousFocus = null;
-let stockCheckTimer = null;
-let stockSaveTimer = null;
 let activeDesignImage = stickyImage?.getAttribute("src") || "";
 let designSwapTimer = null;
 let selectedColourInput = document.querySelector(".colour-swatch input:checked") || null;
 let selectedColourView = "angle";
 let colourSentenceTimer = null;
+let isSubmittingPreorder = false;
 const colourViewOrder = ["angle", "top", "detail"];
-const boardPrice = 89.95;
 const colourViewLabels = {
   angle: "Angle view",
   top: "Top view",
@@ -209,79 +203,10 @@ document.querySelectorAll("[data-scroll-to]").forEach((button) => {
   });
 });
 
-function openStockModal(context = "cta") {
-  if (!stockModal) return;
-
-  orderModalContext = context;
-  previousFocus = document.activeElement;
-  stockModal.hidden = false;
-  stockModal.classList.remove("is-checking", "is-ready", "is-saving", "is-success");
-  stockModal.classList.add("is-details");
-  document.body.classList.add("modal-open");
-
-  stockDialog?.focus({ preventScroll: true });
-
-  window.clearTimeout(stockCheckTimer);
-  window.clearTimeout(stockSaveTimer);
-  if (checkoutNote) checkoutNote.textContent = "";
-  syncCheckoutFromSelectedColour();
-  updateStockConfirmButton({ quantity: checkoutQuantityInput?.value || 1 });
-  window.setTimeout(() => {
-    checkoutForm?.querySelector("input, button")?.focus({ preventScroll: true });
-  }, 0);
-}
-
-function beginStockCheck() {
-  if (!stockModal) return;
-
-  stockModal.classList.remove("is-details", "is-ready", "is-saving", "is-success");
-  stockModal.classList.add("is-checking");
-  stockDialog?.focus({ preventScroll: true });
-
-  window.clearTimeout(stockCheckTimer);
-  window.clearTimeout(stockSaveTimer);
-  stockCheckTimer = window.setTimeout(() => {
-    stockModal.classList.remove("is-checking");
-    stockModal.classList.add("is-ready");
-    stockConfirm?.focus({ preventScroll: true });
-  }, 1650);
-}
-
-function closeStockModal({ restoreFocus = true, clearPending = true } = {}) {
-  if (!stockModal) return;
-
-  window.clearTimeout(stockCheckTimer);
-  window.clearTimeout(stockSaveTimer);
-  stockModal.hidden = true;
-  stockModal.classList.remove("is-details", "is-checking", "is-ready", "is-saving", "is-success");
-  document.body.classList.remove("modal-open");
-  orderModalContext = "cta";
-  if (clearPending) pendingOrderData = null;
-
-  if (restoreFocus && previousFocus instanceof HTMLElement) {
-    previousFocus.focus({ preventScroll: true });
-  }
-}
-
-function saveOrderInterest(data) {
-  const existing = JSON.parse(localStorage.getItem("roam-bar-preorders") || "[]");
-  existing.push({
-    ...data,
-    intent: "preorder-waitlist",
-    createdAt: new Date().toISOString(),
-  });
-  localStorage.setItem("roam-bar-preorders", JSON.stringify(existing));
-}
-
-function updateStockConfirmButton(data = {}) {
-  if (!stockConfirm) return;
-  stockConfirm.textContent = "Confirm pre-order";
-}
-
 orderTriggers.forEach((trigger) => {
   trigger.addEventListener("click", (event) => {
     event.preventDefault();
-    openStockModal("cta");
+    document.getElementById("preorder")?.scrollIntoView({ behavior: "smooth" });
   });
 });
 
@@ -390,13 +315,17 @@ function updateColourChoice(input) {
   if (colourCopy && selectedCopy) colourCopy.textContent = selectedCopy;
   updateColourSentence(input);
   updateColourPreview();
+  syncPreorderColourFromSelectedColour();
 }
 
-function syncCheckoutFromSelectedColour() {
+function syncPreorderColourFromSelectedColour() {
   if (!(selectedColourInput instanceof HTMLInputElement)) return;
   syncColourSwatches(getColourKey(selectedColourInput));
-  if (checkoutQuantityInput instanceof HTMLInputElement && !checkoutQuantityInput.value) {
-    checkoutQuantityInput.value = "1";
+  if (preorderColourSelect instanceof HTMLSelectElement) {
+    const selectedColour = getSelectedColourName();
+    if (Array.from(preorderColourSelect.options).some((option) => option.value === selectedColour)) {
+      preorderColourSelect.value = selectedColour;
+    }
   }
 }
 
@@ -458,42 +387,6 @@ function updateDestinationResult() {
 
 destinationSelect?.addEventListener("change", updateDestinationResult);
 updateDestinationResult();
-
-stockCancelButtons.forEach((button) => {
-  button.addEventListener("click", () => closeStockModal());
-});
-
-stockModal?.addEventListener("click", (event) => {
-  if (event.target === stockModal) closeStockModal();
-});
-
-window.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && stockModal && !stockModal.hidden) {
-    closeStockModal();
-  }
-});
-
-stockConfirm?.addEventListener("click", () => {
-  if (pendingOrderData) {
-    saveOrderInterest(pendingOrderData);
-    pendingOrderData = null;
-    checkoutForm?.reset();
-    syncCheckoutFromSelectedColour();
-    window.clearTimeout(stockCheckTimer);
-    window.clearTimeout(stockSaveTimer);
-    stockModal.classList.remove("is-checking", "is-ready", "is-success");
-    stockModal.classList.add("is-saving");
-    stockDialog?.focus({ preventScroll: true });
-    stockSaveTimer = window.setTimeout(() => {
-      stockModal.classList.remove("is-saving");
-      stockModal.classList.add("is-success");
-      stockDialog?.focus({ preventScroll: true });
-    }, 850);
-    return;
-  }
-
-  closeStockModal({ restoreFocus: false });
-});
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
@@ -593,19 +486,117 @@ window.addEventListener("pointermove", (event) => {
   doc.style.setProperty("--pointer-y", y.toFixed(3));
 });
 
-checkoutForm?.addEventListener("submit", (event) => {
+function setPreorderNote(message, status = "") {
+  if (!preorderNote) return;
+  preorderNote.textContent = message;
+  preorderNote.classList.toggle("is-success", status === "success");
+  preorderNote.classList.toggle("is-error", status === "error");
+}
+
+function setPreorderLoading(isLoading) {
+  isSubmittingPreorder = isLoading;
+  if (preorderSubmit instanceof HTMLButtonElement) {
+    preorderSubmit.disabled = isLoading;
+    preorderSubmit.textContent = isLoading ? "Joining..." : "Join the pre-order list";
+  }
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function cleanOptionalText(value) {
+  const text = String(value || "").trim();
+  return text || null;
+}
+
+function getPreorderPayload(form) {
+  const formData = new FormData(form);
+  const quantity = Number.parseInt(String(formData.get("quantity") || ""), 10);
+
+  return {
+    honeypot: String(formData.get("company") || "").trim(),
+    data: {
+      name: String(formData.get("name") || "").trim(),
+      email: String(formData.get("email") || "").trim().toLowerCase(),
+      quantity,
+      colour: cleanOptionalText(formData.get("colour")),
+      variant: cleanOptionalText(formData.get("variant")),
+      notes: cleanOptionalText(formData.get("notes")),
+      marketing_consent: formData.has("marketing_consent"),
+      source: "website",
+      status: "registered_interest",
+    },
+  };
+}
+
+function validatePreorderPayload(payload) {
+  if (!payload.name) return "Please enter your name.";
+  if (!isValidEmail(payload.email)) return "Please enter a valid email address.";
+  if (!Number.isInteger(payload.quantity) || payload.quantity <= 0) {
+    return "Please choose a quantity of at least 1.";
+  }
+  return "";
+}
+
+function isDuplicatePreorderError(error) {
+  const message = String(error?.message || "").toLowerCase();
+  return error?.code === "23505" || message.includes("duplicate") || message.includes("unique");
+}
+
+preorderForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  if (!checkoutForm.checkValidity()) {
-    checkoutForm.reportValidity();
+  if (isSubmittingPreorder || !(preorderForm instanceof HTMLFormElement)) return;
+
+  const { data, honeypot } = getPreorderPayload(preorderForm);
+  const validationError = validatePreorderPayload(data);
+
+  if (honeypot) {
+    setPreorderNote("Thanks - you're on the early access list. We'll contact you before launch.", "success");
+    preorderForm.reset();
+    syncPreorderColourFromSelectedColour();
     return;
   }
 
-  pendingOrderData = Object.fromEntries(new FormData(checkoutForm).entries());
-  pendingOrderData.quantity = String(Math.max(1, Number(pendingOrderData.quantity) || 1));
-  pendingOrderData.unitPrice = `A$${boardPrice.toFixed(2)}`;
-  updateStockConfirmButton(pendingOrderData);
-  orderModalContext = "form";
-  if (checkoutNote) checkoutNote.textContent = "";
-  beginStockCheck();
+  if (validationError) {
+    setPreorderNote(validationError, "error");
+    return;
+  }
+
+  const supabase = await getSupabaseClient();
+  if (!supabase) {
+    setPreorderNote(
+      "The early access list is not connected just yet. Please email hello@roamboard.com.au and we'll add you manually.",
+      "error"
+    );
+    return;
+  }
+
+  setPreorderLoading(true);
+  setPreorderNote("");
+
+  try {
+    const { error } = await supabase.from("preorders").insert(data);
+
+    if (error) {
+      setPreorderNote(
+        isDuplicatePreorderError(error)
+          ? "Looks like you're already on the list."
+          : "We couldn't save your details just now. Please try again or email hello@roamboard.com.au.",
+        isDuplicatePreorderError(error) ? "success" : "error"
+      );
+      return;
+    }
+
+    preorderForm.reset();
+    syncPreorderColourFromSelectedColour();
+    setPreorderNote("Thanks - you're on the early access list. We'll contact you before launch.", "success");
+  } catch {
+    setPreorderNote("We couldn't save your details just now. Please try again or email hello@roamboard.com.au.", "error");
+  } finally {
+    setPreorderLoading(false);
+  }
 });
+
+syncPreorderColourFromSelectedColour();

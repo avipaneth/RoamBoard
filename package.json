@@ -4,9 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "optimize:images": "node scripts/optimise-images.mjs"
+    "optimize:images": "node scripts/optimise-images.mjs",
+    "preorders:config": "node scripts/write-supabase-config.mjs"
   },
   "devDependencies": {
     "sharp": "^0.34.3"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.108.2"
   }
 }

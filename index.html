@@ -27,7 +27,7 @@
       <div class="product-actions">
         <a href="#highlights">Overview</a>
         <a href="#destination-check">Compatibility</a>
-        <a class="pill-button small order-trigger" href="#preorder">Buy now</a>
+        <a class="pill-button small order-trigger" href="#preorder">Register interest</a>
       </div>
     </nav>
 
@@ -70,7 +70,7 @@
               The travel power board for Australians abroad.
             </p>
             <div class="hero-buy-panel">
-              <a class="pill-button order-trigger" href="#preorder">Buy Roamboard</a>
+              <a class="pill-button order-trigger" href="#preorder">Register interest</a>
               <p>A$89.95</p>
             </div>
           </div>
@@ -192,7 +192,7 @@
                     <path d="M9 6l6 6-6 6" />
                   </svg>
                 </button>
-                <a class="pill-button colourways-buy order-trigger" href="#preorder">Buy now</a>
+                <a class="pill-button colourways-buy order-trigger" href="#preorder">Register interest</a>
               </div>
             </div>
           </div>
@@ -335,7 +335,7 @@
         <div class="section-head reveal">
           <h2 id="highlights-title">Get the highlights.</h2>
           <button class="ghost-button order-trigger" type="button" data-scroll-to="preorder">
-            <span>Buy now</span>
+            <span>Register interest</span>
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M5 12h14M13 6l6 6-6 6" />
             </svg>
@@ -489,6 +489,70 @@
         </div>
       </section>
 
+      <section class="preorder" id="preorder" aria-labelledby="preorder-title">
+        <div class="preorder-copy reveal">
+          <p class="eyebrow">Early access</p>
+          <h2 id="preorder-title">Join the pre-order list.</h2>
+          <p>
+            Tell us which Roamboard you want and we will contact you before launch. No payment or
+            deposit today.
+          </p>
+        </div>
+
+        <form class="preorder-form reveal" id="preorder-form" novalidate>
+          <div class="field">
+            <label for="preorder-name">Name</label>
+            <input id="preorder-name" name="name" type="text" autocomplete="name" required />
+          </div>
+
+          <div class="field">
+            <label for="preorder-email">Email</label>
+            <input id="preorder-email" name="email" type="email" autocomplete="email" required />
+          </div>
+
+          <div class="field">
+            <label for="preorder-quantity">Quantity</label>
+            <input id="preorder-quantity" name="quantity" type="number" inputmode="numeric" min="1" step="1" value="1" required />
+          </div>
+
+          <div class="field">
+            <label for="preorder-colour">Preferred colour</label>
+            <select id="preorder-colour" name="colour" data-preorder-colour>
+              <option value="">No preference yet</option>
+              <option value="Chocolate Brown" selected>Chocolate Brown</option>
+              <option value="Cosmic Orange">Cosmic Orange</option>
+              <option value="Baby Blue">Baby Blue</option>
+            </select>
+          </div>
+
+          <div class="field full">
+            <label for="preorder-variant">Version</label>
+            <select id="preorder-variant" name="variant">
+              <option value="">No preference yet</option>
+              <option value="Type C/E/F travel board">Type C/E/F travel board</option>
+            </select>
+          </div>
+
+          <div class="field full">
+            <label for="preorder-notes">Notes</label>
+            <textarea id="preorder-notes" name="notes" rows="4" placeholder="Destinations, timing or colour notes"></textarea>
+          </div>
+
+          <label class="checkbox-field full" for="preorder-marketing-consent">
+            <input id="preorder-marketing-consent" name="marketing_consent" type="checkbox" />
+            <span>Email me launch updates and early access details.</span>
+          </label>
+
+          <div class="honeypot-field" aria-hidden="true">
+            <label for="preorder-company">Company</label>
+            <input id="preorder-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <button class="pill-button submit" id="preorder-submit" type="submit">Join the pre-order list</button>
+          <p class="form-note" id="preorder-note" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
       <section class="faq" aria-labelledby="faq-title">
         <div class="faq-head reveal">
           <p class="eyebrow">FAQ</p>
@@ -539,7 +603,7 @@
           </details>
         </div>
         <div class="faq-mobile-cta reveal">
-          <button class="pill-button order-trigger" type="button">Buy now</button>
+          <button class="pill-button order-trigger" type="button">Register interest</button>
         </div>
       </section>
 
@@ -579,168 +643,7 @@
       </div>
     </footer>
 
-    <div class="stock-modal" id="stock-modal" hidden>
-      <div class="stock-modal-backdrop" data-stock-cancel></div>
-      <section class="stock-dialog" role="dialog" aria-modal="true" aria-labelledby="stock-title" aria-describedby="stock-copy" tabindex="-1">
-        <div class="stock-image-panel">
-          <picture>
-            <source
-              type="image/webp"
-              srcset="
-                assets/optimized/roam-modal-hanging-colourways-720w.webp 720w,
-                assets/optimized/roam-modal-hanging-colourways-1200w.webp 1200w
-              "
-              sizes="(max-width: 620px) 100vw, 440px"
-            />
-            <img
-              src="assets/optimized/roam-modal-hanging-colourways-1200w.jpg"
-              srcset="
-                assets/optimized/roam-modal-hanging-colourways-720w.jpg 720w,
-                assets/optimized/roam-modal-hanging-colourways-1200w.jpg 1200w
-              "
-              sizes="(max-width: 620px) 100vw, 440px"
-              width="1536"
-              height="1024"
-              loading="lazy"
-              decoding="async"
-              alt="Chocolate Brown, Baby Blue and Cosmic Orange Roamboard powerboards hanging by their cords"
-            />
-          </picture>
-        </div>
-        <div class="stock-content">
-          <form class="stock-details" id="checkout-form">
-            <p class="eyebrow">Buy Roamboard</p>
-            <h2>Choose your board.</h2>
-            <p>
-              Enter your details, choose a colour and quantity, then we'll check stock for you.
-            </p>
-
-            <div class="checkout-fields">
-              <div class="field">
-                <label for="checkout-name">Name</label>
-                <input id="checkout-name" name="name" type="text" autocomplete="name" required />
-              </div>
-              <div class="field">
-                <label for="checkout-email">Email</label>
-                <input id="checkout-email" name="email" type="email" autocomplete="email" required />
-              </div>
-              <div class="field">
-                <label for="checkout-phone">Phone</label>
-                <input id="checkout-phone" name="phone" type="tel" autocomplete="tel" />
-              </div>
-              <div class="field checkout-colour-field">
-                <span class="field-label">Colour</span>
-                <div class="colour-swatch-selector checkout-swatch-selector" role="radiogroup" aria-label="Choose checkout colour">
-                  <label class="colour-swatch brown is-selected" aria-label="Chocolate Brown">
-                    <input
-                      type="radio"
-                      name="colour"
-                      value="Chocolate Brown"
-                      checked
-                      data-colour-value="brown"
-                      data-colour-name="Chocolate Brown"
-                      data-colour-display="Chocolate"
-                    />
-                    <span></span>
-                  </label>
-                  <label class="colour-swatch orange" aria-label="Cosmic Orange">
-                    <input
-                      type="radio"
-                      name="colour"
-                      value="Cosmic Orange"
-                      data-colour-value="orange"
-                      data-colour-name="Cosmic Orange"
-                      data-colour-display="Cosmic Orange"
-                    />
-                    <span></span>
-                  </label>
-                  <label class="colour-swatch blue" aria-label="Baby Blue">
-                    <input
-                      type="radio"
-                      name="colour"
-                      value="Baby Blue"
-                      data-colour-value="blue"
-                      data-colour-name="Baby Blue"
-                      data-colour-display="Baby Blue"
-                    />
-                    <span></span>
-                  </label>
-                </div>
-              </div>
-              <div class="field">
-                <label for="checkout-quantity">Quantity</label>
-                <input id="checkout-quantity" name="quantity" type="number" inputmode="numeric" min="1" max="10" value="1" required />
-              </div>
-              <div class="field checkout-use-field">
-                <label for="checkout-use">Main use</label>
-                <select id="checkout-use" name="use">
-                  <option>Regular personal travel</option>
-                  <option>Work-related travel</option>
-                  <option>Creative work or production</option>
-                  <option>Tech work or digital nomad setup</option>
-                  <option>Business travel</option>
-                  <option>Living overseas or expat setup</option>
-                  <option>Couple, family or group travel</option>
-                </select>
-              </div>
-            </div>
-
-            <button class="pill-button submit" type="submit">Buy now</button>
-            <p class="form-note" id="checkout-note" role="status" aria-live="polite"></p>
-          </form>
-
-          <div class="stock-checking" aria-live="polite">
-            <p class="eyebrow">Checking stock</p>
-            <h2>Looking for Roamboard.</h2>
-            <div class="stock-loader" aria-hidden="true">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <div class="stock-lines" aria-hidden="true">
-              <span>Checking colours</span>
-              <span>Checking current batch</span>
-              <span>Checking next dispatch</span>
-            </div>
-          </div>
-
-          <div class="stock-ready">
-            <p class="eyebrow">Currently out of stock</p>
-            <h2 id="stock-title">Pre-order to save your spot.</h2>
-            <p id="stock-copy">
-              Pre-order to save your spot in the queue so you get first access to the next batch. You'll also be notified about shipping dates and any other status updates so you can know when to expect your Roamboard. No deposit required and you can cancel any time so you've got nothing to lose if you change your mind.
-            </p>
-            <div class="stock-actions">
-              <button class="pill-button" type="button" id="stock-confirm">Confirm pre-order</button>
-              <button class="ghost-cancel" type="button" data-stock-cancel>Cancel</button>
-            </div>
-          </div>
-
-          <div class="stock-saving" aria-live="polite">
-            <div class="confirm-spinner" aria-hidden="true"></div>
-            <p class="eyebrow">Saving pre-order</p>
-            <h2>Holding your spot.</h2>
-          </div>
-
-          <div class="stock-success">
-            <div class="stock-confirm-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24">
-                <path d="M6 12.5l4 4L18.5 8" />
-              </svg>
-            </div>
-            <h2>Pre-order Confirmed</h2>
-            <p>
-              We've got you in the queue and we'll email you as soon as we have an update.
-            </p>
-            <div class="stock-actions">
-              <button class="pill-button" type="button" data-stock-cancel>Done</button>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <script src="script.js?v=image-opt-1"></script>
+    <script src="supabase-config.js"></script>
+    <script type="module" src="script.js?v=supabase-preorders-1"></script>
   </body>
 </html>
