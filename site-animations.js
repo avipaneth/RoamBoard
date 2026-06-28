@@ -37,7 +37,7 @@ if (prefersReducedMotion) {
         observer.unobserve(entry.target);
       });
     },
-    { threshold: 0.16, rootMargin: "0px 0px -8% 0px" }
+    { threshold: 0.08, rootMargin: "18% 0px -4% 0px" }
   );
 
   revealNodes.forEach(({ node }) => observer.observe(node));
