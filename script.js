@@ -2,10 +2,6 @@ import { getSupabaseClient } from "./supabaseClient.js";
 
 const doc = document.documentElement;
 const hero = document.querySelector(".hero");
-const filmStrip = document.querySelector(".film-strip");
-const filmTrack = document.querySelector(".film-track");
-const stickyImage = document.querySelector("[data-design-image-display]");
-const designSpecs = Array.from(document.querySelectorAll(".spec[data-design-image]"));
 const preorderForm = document.querySelector("#preorder-form");
 const preorderNote = document.querySelector("#preorder-note");
 const preorderSubmit = document.querySelector("#preorder-submit");
@@ -13,19 +9,26 @@ const preorderColourSelect = document.querySelector("[data-preorder-colour]");
 const orderTriggers = document.querySelectorAll(".order-trigger");
 const colourPicker = document.querySelector("[data-colour-picker]");
 const colourPreview = document.querySelector("[data-colour-preview]");
-const colourName = document.querySelector("[data-colour-selected-name]");
-const colourCopy = document.querySelector("[data-colour-selected-copy]");
 const colourSelectedSentence = document.querySelector("[data-colour-selected-sentence]");
 const colourViewLabel = document.querySelector("[data-colour-view-label]");
 const destinationSelect = document.querySelector("[data-destination-select]");
 const destinationResult = document.querySelector("[data-destination-result]");
+const featureButtons = Array.from(document.querySelectorAll("[data-feature-button]"));
+const featurePanels = Array.from(document.querySelectorAll("[data-feature-panel]"));
+const highlightReel = document.querySelector("[data-highlight-reel]");
+const highlightDots = Array.from(document.querySelectorAll("[data-reel-dot]"));
+const highlightPause = document.querySelector("[data-reel-pause]");
 
-let activeDesignImage = stickyImage?.getAttribute("src") || "";
-let designSwapTimer = null;
 let selectedColourInput = document.querySelector(".colour-swatch input:checked") || null;
 let selectedColourView = "angle";
+let activeFeature = "colours";
 let colourSentenceTimer = null;
+let imageSwapTimer = null;
 let isSubmittingPreorder = false;
+let highlightTimer = null;
+let highlightIndex = 0;
+let highlightsPaused = false;
+
 const colourViewOrder = ["angle", "top", "detail"];
 const colourViewLabels = {
   angle: "Angle view",
@@ -77,12 +80,6 @@ const colourViewImages = {
     },
   },
 };
-
-designSpecs.forEach((spec) => {
-  if (!spec.dataset.designImage) return;
-  const image = new Image();
-  image.src = spec.dataset.designImage;
-});
 
 const destinationCompatibility = {
   Austria: {
@@ -176,32 +173,28 @@ document.body.classList.add("is-loading");
 window.addEventListener("load", () => {
   document.body.classList.remove("is-loading");
   document.querySelectorAll(".hero .reveal").forEach((node, index) => {
-    window.setTimeout(() => node.classList.add("is-visible"), 180 + index * 140);
+    window.setTimeout(() => node.classList.add("is-visible"), 120 + index * 130);
   });
 });
 
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
+if ("IntersectionObserver" in window) {
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
         entry.target.classList.add("is-visible");
         revealObserver.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.18, rootMargin: "0px 0px -8% 0px" }
-);
+      });
+    },
+    { threshold: 0.16, rootMargin: "0px 0px -8% 0px" }
+  );
 
-document.querySelectorAll(".reveal:not(.hero .reveal)").forEach((node) => {
-  revealObserver.observe(node);
-});
-
-document.querySelectorAll("[data-scroll-to]").forEach((button) => {
-  button.addEventListener("click", (event) => {
-    if (button.classList.contains("order-trigger") || event.defaultPrevented) return;
-    document.getElementById(button.dataset.scrollTo)?.scrollIntoView({ behavior: "smooth" });
+  document.querySelectorAll(".reveal:not(.hero .reveal)").forEach((node) => {
+    revealObserver.observe(node);
   });
-});
+} else {
+  document.querySelectorAll(".reveal").forEach((node) => node.classList.add("is-visible"));
+}
 
 orderTriggers.forEach((trigger) => {
   trigger.addEventListener("click", (event) => {
@@ -210,9 +203,37 @@ orderTriggers.forEach((trigger) => {
   });
 });
 
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function updateScrollMotion() {
+  if (!hero) return;
+  const y = window.scrollY;
+  const vh = window.innerHeight || 1;
+  const heroProgress = clamp(y / vh, 0, 1);
+  doc.style.setProperty("--hero-scale", String(1 + heroProgress * 0.055));
+}
+
+let scrollTicking = false;
+window.addEventListener(
+  "scroll",
+  () => {
+    if (scrollTicking) return;
+    window.requestAnimationFrame(() => {
+      updateScrollMotion();
+      scrollTicking = false;
+    });
+    scrollTicking = true;
+  },
+  { passive: true }
+);
+window.addEventListener("resize", updateScrollMotion);
+updateScrollMotion();
+
 function getColourKey(input) {
   if (!(input instanceof HTMLInputElement)) return "";
-  return input.dataset.colourValue || input.value;
+  return input.value;
 }
 
 function getSelectedColourName() {
@@ -253,6 +274,19 @@ function scheduleAdjacentColourPreload() {
   window.setTimeout(run, 240);
 }
 
+function setViewerImage(src, alt = "") {
+  if (!colourPreview || !src) return;
+  if (colourPreview.getAttribute("src") === src) return;
+
+  colourPreview.classList.add("is-changing");
+  window.clearTimeout(imageSwapTimer);
+  imageSwapTimer = window.setTimeout(() => {
+    colourPreview.src = src;
+    if (alt) colourPreview.alt = alt;
+    colourPreview.classList.remove("is-changing");
+  }, 130);
+}
+
 function syncColourSwatches(selectedKey) {
   document.querySelectorAll(".colour-swatch").forEach((label) => {
     const input = label.querySelector("input");
@@ -277,45 +311,16 @@ function updateColourSentence(input) {
   }, 145);
 }
 
-function updateColourPreview({ animate = true } = {}) {
+function updateColourPreview() {
   if (!(selectedColourInput instanceof HTMLInputElement) || !colourPreview) return;
 
   const selectedColour = getColourKey(selectedColourInput);
   const view = colourViewImages[selectedColour]?.[selectedColourView] || colourViewImages[selectedColour]?.angle;
   if (!view) return;
 
-  const applyImage = () => {
-    colourPreview.src = view.src;
-    colourPreview.alt = view.alt;
-    if (colourViewLabel) colourViewLabel.textContent = colourViewLabels[selectedColourView] || "Angle view";
-    colourPreview.classList.remove("is-changing");
-    scheduleAdjacentColourPreload();
-  };
-
-  if (animate) {
-    colourPreview.classList.add("is-changing");
-    window.setTimeout(applyImage, 140);
-  } else {
-    applyImage();
-  }
-}
-
-function updateColourChoice(input) {
-  if (!(input instanceof HTMLInputElement) || !input.closest(".colour-swatch")) return;
-
-  const { colourName: selectedName, colourCopy: selectedCopy } = input.dataset;
-  const selectedKey = getColourKey(input);
-  if (!selectedKey) return;
-
-  input.checked = true;
-  selectedColourInput = input;
-  syncColourSwatches(selectedKey);
-
-  if (colourName) colourName.textContent = selectedName;
-  if (colourCopy && selectedCopy) colourCopy.textContent = selectedCopy;
-  updateColourSentence(input);
-  updateColourPreview();
-  syncPreorderColourFromSelectedColour();
+  setViewerImage(view.src, view.alt);
+  if (colourViewLabel) colourViewLabel.textContent = colourViewLabels[selectedColourView] || "Angle view";
+  scheduleAdjacentColourPreload();
 }
 
 function syncPreorderColourFromSelectedColour() {
@@ -329,6 +334,44 @@ function syncPreorderColourFromSelectedColour() {
   }
 }
 
+function setActiveFeature(featureKey) {
+  activeFeature = featureKey;
+
+  featurePanels.forEach((panel) => {
+    const isActive = panel.dataset.featurePanel === featureKey;
+    panel.classList.toggle("is-active", isActive);
+    const icon = panel.querySelector(".feature-icon");
+    icon?.classList.toggle("plus", !isActive);
+    icon?.classList.toggle("empty", isActive);
+  });
+
+  const activeButton = featureButtons.find((button) => button.dataset.featureTarget === featureKey);
+  if (!activeButton) return;
+
+  if (featureKey === "colours") {
+    updateColourPreview();
+    return;
+  }
+
+  const featureImage = activeButton.dataset.featureImage;
+  const featureAlt = activeButton.dataset.featureAlt || "";
+  setViewerImage(featureImage, featureAlt);
+}
+
+function updateColourChoice(input) {
+  if (!(input instanceof HTMLInputElement) || !input.closest(".colour-swatch")) return;
+
+  const selectedKey = getColourKey(input);
+  if (!selectedKey) return;
+
+  input.checked = true;
+  selectedColourInput = input;
+  syncColourSwatches(selectedKey);
+  updateColourSentence(input);
+  setActiveFeature("colours");
+  syncPreorderColourFromSelectedColour();
+}
+
 document.addEventListener("change", (event) => {
   if (!(event.target instanceof HTMLInputElement) || !event.target.closest(".colour-swatch")) return;
   updateColourChoice(event.target);
@@ -336,30 +379,104 @@ document.addEventListener("change", (event) => {
 
 colourPicker?.addEventListener("click", (event) => {
   if (!(event.target instanceof Element)) return;
+
   const viewButton = event.target.closest("[data-colour-view-direction]");
-  if (!(viewButton instanceof HTMLButtonElement)) return;
-
-  const direction = viewButton.dataset.colourViewDirection;
-  const currentIndex = colourViewOrder.indexOf(selectedColourView);
-  const nextIndex =
-    direction === "previous"
-      ? (currentIndex - 1 + colourViewOrder.length) % colourViewOrder.length
-      : (currentIndex + 1) % colourViewOrder.length;
-  selectedColourView = colourViewOrder[nextIndex];
-  updateColourPreview();
+  if (viewButton instanceof HTMLButtonElement) {
+    const direction = viewButton.dataset.colourViewDirection;
+    const currentIndex = colourViewOrder.indexOf(selectedColourView);
+    selectedColourView =
+      direction === "previous"
+        ? colourViewOrder[(currentIndex - 1 + colourViewOrder.length) % colourViewOrder.length]
+        : colourViewOrder[(currentIndex + 1) % colourViewOrder.length];
+    setActiveFeature("colours");
+  }
 });
 
-document.addEventListener("click", (event) => {
-  if (!(event.target instanceof Element)) return;
-  const label = event.target.closest(".colour-swatch");
-  if (!(label instanceof HTMLLabelElement)) return;
-  const input = label.querySelector("input");
-  if (!(input instanceof HTMLInputElement)) return;
-  input.checked = true;
-  updateColourChoice(input);
+featureButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const target = button.dataset.featureTarget;
+    if (!target || target === activeFeature) return;
+    setActiveFeature(target);
+  });
 });
 
-updateColourPreview({ animate: false });
+syncPreorderColourFromSelectedColour();
+updateColourPreview();
+
+function updateHighlightDots(index) {
+  highlightIndex = index;
+  highlightDots.forEach((dot, dotIndex) => {
+    dot.classList.toggle("is-active", dotIndex === index);
+  });
+}
+
+function scrollHighlightTo(index, behavior = "smooth") {
+  if (!highlightReel) return;
+  const cards = Array.from(highlightReel.querySelectorAll(".highlight-card"));
+  const card = cards[index];
+  if (!card) return;
+  highlightReel.scrollTo({ left: card.offsetLeft - highlightReel.offsetLeft, behavior });
+  updateHighlightDots(index);
+}
+
+function updateHighlightFromScroll() {
+  if (!highlightReel) return;
+  const cards = Array.from(highlightReel.querySelectorAll(".highlight-card"));
+  if (!cards.length) return;
+
+  const reelLeft = highlightReel.scrollLeft;
+  let nearestIndex = 0;
+  let nearestDistance = Number.POSITIVE_INFINITY;
+
+  cards.forEach((card, index) => {
+    const distance = Math.abs(card.offsetLeft - highlightReel.offsetLeft - reelLeft);
+    if (distance < nearestDistance) {
+      nearestDistance = distance;
+      nearestIndex = index;
+    }
+  });
+
+  updateHighlightDots(nearestIndex);
+}
+
+function startHighlightAutoplay() {
+  if (!highlightReel || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  window.clearInterval(highlightTimer);
+  highlightTimer = window.setInterval(() => {
+    if (highlightsPaused || document.hidden) return;
+    const cards = highlightReel.querySelectorAll(".highlight-card");
+    if (!cards.length) return;
+    scrollHighlightTo((highlightIndex + 1) % cards.length);
+  }, 5200);
+}
+
+highlightDots.forEach((dot) => {
+  dot.addEventListener("click", () => {
+    const index = Number.parseInt(dot.dataset.reelDot || "0", 10);
+    highlightsPaused = true;
+    if (highlightPause instanceof HTMLButtonElement) {
+      highlightPause.setAttribute("aria-pressed", "true");
+      highlightPause.setAttribute("aria-label", "Play highlights");
+    }
+    scrollHighlightTo(index);
+  });
+});
+
+highlightReel?.addEventListener(
+  "scroll",
+  () => {
+    window.requestAnimationFrame(updateHighlightFromScroll);
+  },
+  { passive: true }
+);
+
+highlightPause?.addEventListener("click", () => {
+  highlightsPaused = !highlightsPaused;
+  highlightPause.setAttribute("aria-pressed", String(highlightsPaused));
+  highlightPause.setAttribute("aria-label", highlightsPaused ? "Play highlights" : "Pause highlights");
+});
+
+startHighlightAutoplay();
 
 function updateDestinationResult() {
   if (!destinationSelect || !destinationResult) return;
@@ -380,111 +497,13 @@ function updateDestinationResult() {
 
   destinationResult.classList.add(`is-${result.status}`);
   if (icon) {
-    icon.textContent = result.status === "compatible" ? "✓" : result.status === "incompatible" ? "×" : "!";
+    icon.textContent = result.status === "compatible" ? "OK" : result.status === "incompatible" ? "X" : "!";
   }
   if (message) message.textContent = result.message;
 }
 
 destinationSelect?.addEventListener("change", updateDestinationResult);
 updateDestinationResult();
-
-function clamp(value, min, max) {
-  return Math.min(Math.max(value, min), max);
-}
-
-function setDesignImage(spec) {
-  if (!stickyImage || !spec) return;
-
-  const nextImage = spec.dataset.designImage;
-  if (!nextImage) return;
-
-  designSpecs.forEach((node) => {
-    node.classList.toggle("is-active", node === spec);
-  });
-
-  if (activeDesignImage === nextImage) return;
-
-  activeDesignImage = nextImage;
-  stickyImage.classList.add("is-changing");
-  stickyImage.src = nextImage;
-  stickyImage.alt = spec.dataset.designAlt || stickyImage.alt;
-  window.clearTimeout(designSwapTimer);
-  designSwapTimer = window.setTimeout(() => {
-    stickyImage.classList.remove("is-changing");
-  }, 120);
-}
-
-function updateDesignImage() {
-  if (!stickyImage || !designSpecs.length) return;
-
-  const vh = window.innerHeight || 1;
-  const targetY = vh * 0.52;
-  let activeSpec = designSpecs[0];
-
-  designSpecs.forEach((spec) => {
-    const rect = spec.getBoundingClientRect();
-    if (rect.top <= targetY) {
-      activeSpec = spec;
-    }
-  });
-
-  setDesignImage(activeSpec);
-}
-
-function updateScrollMotion() {
-  const y = window.scrollY;
-  const vh = window.innerHeight || 1;
-
-  if (hero) {
-    const heroProgress = clamp(y / vh, 0, 1);
-    doc.style.setProperty("--hero-scale", String(1 + heroProgress * 0.065));
-  }
-
-  if (filmStrip && filmTrack && window.matchMedia("(min-width: 901px)").matches) {
-    const rect = filmStrip.getBoundingClientRect();
-    const progress = clamp((vh - rect.top) / (vh + rect.height), 0, 1);
-    const travel = Math.max(filmTrack.scrollWidth - window.innerWidth + 160, 0);
-    doc.style.setProperty("--film-x", `${-travel * progress}px`);
-  }
-
-  if (stickyImage) {
-    const rect = stickyImage.getBoundingClientRect();
-    const progress = clamp((vh - rect.top) / (vh + rect.height), 0, 1);
-    doc.style.setProperty("--detail-scale", String(1.07 - progress * 0.055));
-  }
-
-  updateDesignImage();
-}
-
-let ticking = false;
-window.addEventListener(
-  "scroll",
-  () => {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        updateScrollMotion();
-        ticking = false;
-      });
-      ticking = true;
-    }
-  },
-  { passive: true }
-);
-
-window.addEventListener("resize", updateScrollMotion);
-updateScrollMotion();
-
-window.addEventListener("pointermove", (event) => {
-  if (!hero || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-  const rect = hero.getBoundingClientRect();
-  if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-
-  const x = (event.clientX / window.innerWidth - 0.5) * 2;
-  const y = (event.clientY / window.innerHeight - 0.5) * 2;
-  doc.style.setProperty("--pointer-x", x.toFixed(3));
-  doc.style.setProperty("--pointer-y", y.toFixed(3));
-});
 
 function setPreorderNote(message, status = "") {
   if (!preorderNote) return;
@@ -567,7 +586,7 @@ preorderForm?.addEventListener("submit", async (event) => {
   const supabase = await getSupabaseClient();
   if (!supabase) {
     setPreorderNote(
-      "The early access list is not connected just yet. Please email hello@roamboard.com.au and we'll add you manually.",
+      "The early access list is not connected just yet. Please email support@roamboard.shop and we'll add you manually.",
       "error"
     );
     return;
@@ -583,7 +602,7 @@ preorderForm?.addEventListener("submit", async (event) => {
       setPreorderNote(
         isDuplicatePreorderError(error)
           ? "Looks like you're already on the list."
-          : "We couldn't save your details just now. Please try again or email hello@roamboard.com.au.",
+          : "We couldn't save your details just now. Please try again or email support@roamboard.shop.",
         isDuplicatePreorderError(error) ? "success" : "error"
       );
       return;
@@ -593,10 +612,8 @@ preorderForm?.addEventListener("submit", async (event) => {
     syncPreorderColourFromSelectedColour();
     setPreorderNote("Thanks - you're on the early access list. We'll contact you before launch.", "success");
   } catch {
-    setPreorderNote("We couldn't save your details just now. Please try again or email hello@roamboard.com.au.", "error");
+    setPreorderNote("We couldn't save your details just now. Please try again or email support@roamboard.shop.", "error");
   } finally {
     setPreorderLoading(false);
   }
 });
-
-syncPreorderColourFromSelectedColour();
