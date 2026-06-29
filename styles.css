@@ -477,6 +477,134 @@ picture {
   animation: hero-product-float-in 980ms cubic-bezier(0.2, 0.72, 0.17, 1) 260ms both;
 }
 
+.travel-smarter {
+  width: 100%;
+  padding: 64px;
+  background: var(--white);
+}
+
+.travel-smarter-panel {
+  position: relative;
+  width: min(1312px, 100%);
+  min-height: 914px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 32px;
+  background: var(--paper);
+  isolation: isolate;
+}
+
+.travel-smarter-copy {
+  position: relative;
+  z-index: 3;
+  width: min(728px, calc(100% - 48px));
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.travel-smarter-copy::before {
+  content: "";
+  position: absolute;
+  inset: -54px -60px;
+  z-index: -1;
+  border-radius: 44px;
+  background:
+    radial-gradient(closest-side, rgba(245, 245, 247, 0.98), rgba(245, 245, 247, 0.92) 72%, rgba(245, 245, 247, 0) 100%);
+  pointer-events: none;
+}
+
+.travel-smarter-copy h2 {
+  max-width: 728px;
+  margin: 0;
+  color: var(--ink);
+  font-family: "SF Pro Display", "SF Pro", var(--font);
+  font-size: clamp(68px, 6.667vw, 96px);
+  font-weight: 590;
+  line-height: 1.0417;
+  letter-spacing: 0;
+}
+
+.travel-smarter-copy p {
+  max-width: 728px;
+  margin: 0;
+  color: var(--ink);
+  font-size: 21px;
+  font-weight: 590;
+  line-height: 29px;
+  letter-spacing: 0;
+}
+
+.travel-smarter-buy {
+  min-width: 110px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  padding: 0 22px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.travel-smarter-buy:hover,
+.travel-smarter-buy:focus-visible {
+  background: var(--ink);
+  color: var(--white);
+  transform: translateY(-1px);
+}
+
+.travel-tub {
+  position: absolute;
+  z-index: 1;
+  width: clamp(330px, 37vw, 520px);
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 22px 22px rgba(0, 0, 0, 0.18));
+}
+
+.travel-tub img {
+  width: 100%;
+  height: auto;
+}
+
+.travel-tub-top-left {
+  top: -280px;
+  left: -172px;
+  transform: rotate(65deg);
+}
+
+.travel-tub-top-right {
+  top: -265px;
+  right: -118px;
+  transform: rotate(118deg);
+}
+
+.travel-tub-bottom-left {
+  bottom: -250px;
+  left: -136px;
+  transform: rotate(103deg);
+}
+
+.travel-tub-bottom-right {
+  right: -74px;
+  bottom: -250px;
+  width: clamp(350px, 39vw, 560px);
+  transform: rotate(67deg);
+}
+
 .motion-reveal {
   opacity: 0;
   transform: translateY(26px) scale(0.992);
@@ -2074,6 +2202,43 @@ picture {
     max-width: none;
   }
 
+  .travel-smarter {
+    padding: 44px 32px;
+  }
+
+  .travel-smarter-panel {
+    min-height: 760px;
+  }
+
+  .travel-smarter-copy h2 {
+    font-size: clamp(58px, 8vw, 82px);
+  }
+
+  .travel-tub {
+    width: clamp(280px, 39vw, 430px);
+  }
+
+  .travel-tub-top-left {
+    top: -220px;
+    left: -150px;
+  }
+
+  .travel-tub-top-right {
+    top: -215px;
+    right: -128px;
+  }
+
+  .travel-tub-bottom-left {
+    bottom: -210px;
+    left: -130px;
+  }
+
+  .travel-tub-bottom-right {
+    right: -112px;
+    bottom: -212px;
+    width: clamp(300px, 42vw, 460px);
+  }
+
   .colourways {
     grid-template-columns: 1fr;
   }
@@ -2336,6 +2501,71 @@ picture {
   .hero-product {
     top: 198px;
     width: min(142vw, 560px);
+  }
+
+  .travel-smarter {
+    padding: 28px 18px 42px;
+  }
+
+  .travel-smarter-panel {
+    min-height: 560px;
+    border-radius: 24px;
+  }
+
+  .travel-smarter-copy {
+    width: calc(100% - 32px);
+    gap: 12px;
+  }
+
+  .travel-smarter-copy::before {
+    inset: -30px -22px;
+    border-radius: 30px;
+  }
+
+  .travel-smarter-copy h2 {
+    max-width: 330px;
+    font-size: clamp(42px, 12vw, 58px);
+    line-height: 1.05;
+  }
+
+  .travel-smarter-copy p {
+    max-width: 320px;
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .travel-smarter-buy {
+    min-height: 40px;
+    margin-top: 10px;
+    padding: 0 18px;
+    font-size: 15px;
+    line-height: 19px;
+  }
+
+  .travel-tub {
+    width: clamp(175px, 55vw, 245px);
+    filter: drop-shadow(0 14px 16px rgba(0, 0, 0, 0.17));
+  }
+
+  .travel-tub-top-left {
+    top: -118px;
+    left: -98px;
+  }
+
+  .travel-tub-top-right {
+    top: -112px;
+    right: -96px;
+  }
+
+  .travel-tub-bottom-left {
+    bottom: -128px;
+    left: -100px;
+  }
+
+  .travel-tub-bottom-right {
+    right: -96px;
+    bottom: -128px;
+    width: clamp(185px, 58vw, 258px);
   }
 
   .motion-reveal,

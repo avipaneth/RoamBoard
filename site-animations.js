@@ -1,6 +1,7 @@
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const revealGroups = [
+  [".travel-smarter-panel", "motion-reveal"],
   [".colourway-card", "motion-reveal"],
   [".adapter-story-header", "motion-reveal-soft"],
   [".adapter-feature", "motion-reveal"],
