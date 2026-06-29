@@ -6,7 +6,7 @@ Roamboard uses a simple Supabase insert-only waitlist form. It does not take pay
 
 - Frontend framework: plain static HTML, CSS and JavaScript.
 - Main product page: `index.html`.
-- Forms/components: markup lives directly in `index.html`, styling in `styles.css`, behaviour in `script.js`.
+- Forms/components: markup lives directly in `index.html`, styling in `styles.css`, checkout and Supabase behaviour in `checkout.js`.
 - Environment variables: because this is a static site, `ROAMBOARD_SUPABASE_URL` and `ROAMBOARD_SUPABASE_ANON_KEY` are used to generate an ignored `supabase-config.js` file.
 - Backend/API routes: none. The browser inserts directly into Supabase using the anon public key and Row Level Security.
 
@@ -16,7 +16,7 @@ Roamboard uses a simple Supabase insert-only waitlist form. It does not take pay
 2. Open the SQL editor.
 3. Paste and run the contents of `supabase-preorders-schema.sql`.
 
-The schema enables RLS and only grants public anonymous users `INSERT` access. Do not add public `SELECT`, `UPDATE` or `DELETE` policies, otherwise customer emails could be exposed.
+The schema enables RLS and only grants public anonymous users `INSERT` access for committed preorders and funnel events. Do not add public `SELECT`, `UPDATE` or `DELETE` policies, otherwise customer emails could be exposed.
 
 ## 2. Configure environment variables
 
@@ -52,7 +52,7 @@ pnpm preorders:config
 python3 -m http.server 4173
 ```
 
-Submit the form with a test email. In Supabase, open Table Editor, choose `preorders`, and confirm the row appears. Try the same email twice to confirm the duplicate message appears.
+Submit the form with a test email. On the first valid submit, Supabase should receive a `preorder_funnel_events` row with `stage = 'buy_details_submitted'`. On the pre-order submit, Supabase should receive a second `preorder_funnel_events` row with `stage = 'preorder_committed'` and a committed row in `preorders`. Try the same email twice to confirm the duplicate message appears.
 
 ## 5. Deploy
 
@@ -70,7 +70,7 @@ Then deploy the static files, including the generated `supabase-config.js`. For 
 Use the Supabase dashboard to view and export preorders:
 
 1. Open Table Editor.
-2. Select `public.preorders`.
+2. Select `public.preorders` for committed leads or `public.preorder_funnel_events` for the two-stage funnel.
 3. Use the export/download CSV action from the dashboard.
 
 Keep real `.env` files and all Supabase secret/service-role keys out of git.

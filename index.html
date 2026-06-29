@@ -15,7 +15,7 @@
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='6' y='6' width='20' height='20' rx='6' fill='%23fb4a00'/%3E%3Cpath d='M10 16h12M16 10v12' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"
     />
-    <link rel="stylesheet" href="styles.css?v=site-7" />
+    <link rel="stylesheet" href="styles.css?v=site-9" />
   </head>
   <body>
     <nav class="global-nav" aria-label="Global navigation">
@@ -31,6 +31,23 @@
       </div>
     </nav>
 
+    <div class="promo-ticker" aria-label="Current Roamboard promotions">
+      <div class="promo-ticker-track" aria-hidden="true">
+        <div class="promo-ticker-group">
+          <span>Euro Summer Promotion <span class="promo-ticker-was">A$69.95</span> <strong>A$54.95</strong></span>
+          <span>Mid-year Sale 20% Off</span>
+        </div>
+        <div class="promo-ticker-group">
+          <span>Euro Summer Promotion <span class="promo-ticker-was">A$69.95</span> <strong>A$54.95</strong></span>
+          <span>Mid-year Sale 20% Off</span>
+        </div>
+        <div class="promo-ticker-group">
+          <span>Euro Summer Promotion <span class="promo-ticker-was">A$69.95</span> <strong>A$54.95</strong></span>
+          <span>Mid-year Sale 20% Off</span>
+        </div>
+      </div>
+    </div>
+
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
@@ -39,11 +56,6 @@
             <p>The travel power board for Australians abroad.</p>
           </div>
           <button class="buy-button" type="button" data-checkout-trigger>Buy now</button>
-          <p class="hero-promo" aria-label="Euro Summer promotion, original price A$69.95, now A$54.95">
-            <span>Euro Summer promotion</span>
-            <span class="hero-promo-was">A$69.95</span>
-            <span>A$54.95</span>
-          </p>
         </div>
 
         <picture class="hero-product" aria-label="Roamboard hand-held product image">
@@ -193,7 +205,8 @@
       </section>
 
       <section class="colourways" id="colourways" aria-label="Roamboard colourways">
-        <article class="colourway-card">
+        <div class="colourway-track mobile-carousel-track" data-mobile-carousel="colourways">
+          <article class="colourway-card">
           <div class="colourway-copy">
             <div class="colourway-panel">
               <div>
@@ -226,9 +239,9 @@
               alt="Baby Blue Roamboard held in one hand with a matching blue cable"
             />
           </picture>
-        </article>
+          </article>
 
-        <article class="colourway-card">
+          <article class="colourway-card">
           <div class="colourway-copy">
             <div class="colourway-panel">
               <div>
@@ -261,9 +274,9 @@
               alt="Chocolate Brown Roamboard held in one hand with a matching brown cable"
             />
           </picture>
-        </article>
+          </article>
 
-        <article class="colourway-card">
+          <article class="colourway-card">
           <div class="colourway-copy">
             <div class="colourway-panel">
               <div>
@@ -296,7 +309,16 @@
               alt="Cosmic Orange Roamboard held in one hand with a matching orange cable"
             />
           </picture>
-        </article>
+          </article>
+        </div>
+        <div class="mobile-carousel-controls" aria-label="Roamboard colour controls">
+          <button type="button" data-carousel-control="previous" data-carousel-target="colourways" aria-label="Previous colour">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6 9 12l6 6" /></svg>
+          </button>
+          <button type="button" data-carousel-control="next" data-carousel-target="colourways" aria-label="Next colour">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
+          </button>
+        </div>
       </section>
 
       <section class="destination-check" id="destination-check" aria-labelledby="destination-check-title">
@@ -310,7 +332,7 @@
           <div class="destination-check-content">
             <div class="destination-check-copy">
               <h3><span>Remove the guess work.</span> See if Roamboard is compatible in your destination.</h3>
-              <p>
+              <p class="destination-check-mobile-hide">
                 Roamboard is made for Australian plug devices in Type C, E and F wall sockets. Choose a country below for a quick guide before you pack.
               </p>
             </div>
@@ -369,6 +391,77 @@
               alt="Baby Blue Roamboard held in one hand with its matching cable"
             />
           </picture>
+        </div>
+      </section>
+
+      <section class="adventure-picker" id="adventure" aria-labelledby="adventure-picker-title" data-picker>
+        <header class="adventure-picker-header">
+          <p>Uniquely yours</p>
+          <h2 id="adventure-picker-title">Choose your own adventure.</h2>
+          <p>Choose the colour that feels at home wherever you plug in.</p>
+        </header>
+
+        <div class="picker-shell">
+          <div class="picker-toolbar">
+            <div class="picker-intro">
+              <h3 data-picker-title>Power, in your style.</h3>
+              <p data-picker-subtitle>Choose the one that feels like you.</p>
+              <div class="picker-swatches" aria-label="Choose Roamboard colour">
+                <button
+                  class="picker-swatch brown is-selected"
+                  type="button"
+                  data-colour="brown"
+                  aria-label="Chocolate Brown"
+                  aria-pressed="true"
+                ></button>
+                <button
+                  class="picker-swatch blue"
+                  type="button"
+                  data-colour="blue"
+                  aria-label="Baby Blue"
+                  aria-pressed="false"
+                ></button>
+                <button
+                  class="picker-swatch orange"
+                  type="button"
+                  data-colour="orange"
+                  aria-label="Cosmic Orange"
+                  aria-pressed="false"
+                ></button>
+              </div>
+            </div>
+            <button class="buy-button picker-buy" type="button" data-checkout-trigger>Buy now</button>
+          </div>
+
+          <figure class="picker-stage" aria-live="polite">
+            <img
+              src="assets/optimized/picker-brown-detail-1020w.webp"
+              srcset="
+                assets/optimized/picker-brown-detail-1020w.webp 1020w,
+                assets/optimized/picker-brown-detail-2040w.webp 2040w
+              "
+              sizes="(max-width: 900px) calc(100vw - 36px), 1020px"
+              width="1020"
+              height="610"
+              loading="lazy"
+              decoding="async"
+              alt="Chocolate Brown Roamboard close detail view"
+              data-picker-image
+            />
+          </figure>
+
+          <div class="picker-controls" aria-label="Product view controls">
+            <button class="picker-arrow" type="button" data-view-direction="previous" aria-label="Previous view">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M15 6 9 12l6 6" />
+              </svg>
+            </button>
+            <button class="picker-arrow" type="button" data-view-direction="next" aria-label="Next view">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m9 6 6 6-6 6" />
+              </svg>
+            </button>
+          </div>
         </div>
       </section>
 
@@ -482,6 +575,15 @@
           </article>
         </div>
 
+        <div class="mobile-carousel-controls" aria-label="Travel feature controls">
+          <button type="button" data-carousel-control="previous" data-carousel-target="adapter-features" aria-label="Previous travel feature">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6 9 12l6 6" /></svg>
+          </button>
+          <button type="button" data-carousel-control="next" data-carousel-target="adapter-features" aria-label="Next travel feature">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
+          </button>
+        </div>
+
         <div class="adapter-story-callout">
           <h3><span>Long or short-stay, make it simpler.</span> Whether it’s a long trip or a short stay, setup should feel simple. Home shouldn’t disappear when you pack.</h3>
         </div>
@@ -509,77 +611,6 @@
             alt="Traveller working on a laptop in a cafe with a Baby Blue Roamboard on the table"
           />
         </picture>
-      </section>
-
-      <section class="adventure-picker" id="adventure" aria-labelledby="adventure-picker-title" data-picker>
-        <header class="adventure-picker-header">
-          <p>Uniquely yours</p>
-          <h2 id="adventure-picker-title">Choose your own adventure.</h2>
-          <p>Choose the colour that feels at home wherever you plug in.</p>
-        </header>
-
-        <div class="picker-shell">
-          <div class="picker-toolbar">
-            <div class="picker-intro">
-              <h3 data-picker-title>Power, in your style.</h3>
-              <p data-picker-subtitle>Choose the one that feels like you.</p>
-              <div class="picker-swatches" aria-label="Choose Roamboard colour">
-                <button
-                  class="picker-swatch brown is-selected"
-                  type="button"
-                  data-colour="brown"
-                  aria-label="Chocolate Brown"
-                  aria-pressed="true"
-                ></button>
-                <button
-                  class="picker-swatch blue"
-                  type="button"
-                  data-colour="blue"
-                  aria-label="Baby Blue"
-                  aria-pressed="false"
-                ></button>
-                <button
-                  class="picker-swatch orange"
-                  type="button"
-                  data-colour="orange"
-                  aria-label="Cosmic Orange"
-                  aria-pressed="false"
-                ></button>
-              </div>
-            </div>
-            <button class="buy-button picker-buy" type="button" data-checkout-trigger>Buy now</button>
-          </div>
-
-          <figure class="picker-stage" aria-live="polite">
-            <img
-              src="assets/optimized/picker-brown-detail-1020w.webp"
-              srcset="
-                assets/optimized/picker-brown-detail-1020w.webp 1020w,
-                assets/optimized/picker-brown-detail-2040w.webp 2040w
-              "
-              sizes="(max-width: 900px) calc(100vw - 36px), 1020px"
-              width="1020"
-              height="610"
-              loading="lazy"
-              decoding="async"
-              alt="Chocolate Brown Roamboard close detail view"
-              data-picker-image
-            />
-          </figure>
-
-          <div class="picker-controls" aria-label="Product view controls">
-            <button class="picker-arrow" type="button" data-view-direction="previous" aria-label="Previous view">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M15 6 9 12l6 6" />
-              </svg>
-            </button>
-            <button class="picker-arrow" type="button" data-view-direction="next" aria-label="Next view">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="m9 6 6 6-6 6" />
-              </svg>
-            </button>
-          </div>
-        </div>
       </section>
 
       <section class="need-to-know" aria-labelledby="need-to-know-title">
@@ -612,6 +643,15 @@
             </svg>
             <h3>A longer cord with <strong>one meter of reach</strong> to tackle corner-room sockets.</h3>
           </article>
+        </div>
+
+        <div class="mobile-carousel-controls" aria-label="Need-to-know controls">
+          <button type="button" data-carousel-control="previous" data-carousel-target="need-to-know" aria-label="Previous need-to-know card">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6 9 12l6 6" /></svg>
+          </button>
+          <button type="button" data-carousel-control="next" data-carousel-target="need-to-know" aria-label="Next need-to-know card">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
+          </button>
         </div>
       </section>
 
@@ -735,17 +775,44 @@
 
             <label class="checkout-field">
               <span>Colour</span>
-              <select name="colour" data-checkout-colour required>
-                <option>Chocolate Brown</option>
-                <option>Baby Blue</option>
-                <option>Cosmic Orange</option>
-              </select>
+              <span class="checkout-colour-select">
+                <span class="checkout-colour-dot is-brown" data-checkout-colour-dot aria-hidden="true"></span>
+                <select name="colour" data-checkout-colour required>
+                  <option>Chocolate Brown</option>
+                  <option>Baby Blue</option>
+                  <option>Cosmic Orange</option>
+                </select>
+              </span>
             </label>
 
             <label class="checkout-field">
               <span>Quantity</span>
               <input type="number" name="quantity" inputmode="numeric" min="1" step="1" value="1" required />
             </label>
+          </div>
+
+          <div class="checkout-mobile-stock-callout is-hidden" data-mobile-stock-callout aria-live="polite">
+            <strong>Out of stock right now.</strong>
+            <span>Join the pre-order list to keep your spot and lock in this promotion.</span>
+          </div>
+
+          <div class="checkout-order-summary" data-checkout-order-summary aria-live="polite">
+            <div>
+              <span>Quantity</span>
+              <strong data-summary-quantity>1 board</strong>
+            </div>
+            <div>
+              <span>Original subtotal</span>
+              <strong class="checkout-summary-was" data-summary-original>A$69.95</strong>
+            </div>
+            <div>
+              <span>Euro Summer discount</span>
+              <strong class="checkout-summary-saving" data-summary-saving>-A$15.00</strong>
+            </div>
+            <div class="checkout-order-total">
+              <span>Total today</span>
+              <strong data-summary-total>A$54.95</strong>
+            </div>
           </div>
 
           <label class="checkout-consent">
@@ -769,15 +836,17 @@
           <p>Pre-order request received.</p>
           <h2>You're on the list.</h2>
           <span>We’ll get back to you within 5 business days with an update on stock.</span>
-          <button class="checkout-confirmation-close" type="button" data-checkout-close>Done</button>
+          <button class="checkout-confirmation-close" type="button" data-share-link>Share with a mate</button>
         </div>
       </section>
     </div>
 
+    <div class="share-toast" role="status" aria-live="polite" data-share-toast>Share link copied</div>
+
     <script src="supabase-config.js"></script>
     <script src="product-picker.js?v=picker-1"></script>
     <script src="destination-check.js?v=dest-1"></script>
-    <script src="site-animations.js?v=motion-3"></script>
-    <script src="checkout.js?v=checkout-4"></script>
+    <script src="site-animations.js?v=motion-4"></script>
+    <script src="checkout.js?v=checkout-6"></script>
   </body>
 </html>

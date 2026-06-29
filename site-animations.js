@@ -56,7 +56,7 @@ if (floatingCta && floatingCtaMessage) {
   const messages = [
     { text: "500+ Roamboards reserved this week" },
     { text: "20,000+ happy customers" },
-    { text: "5-star rated", stars: "★★★★★" },
+    { text: "4.9-star rated", stars: "★★★★★" },
   ];
   let messageIndex = 0;
   let ticking = false;
@@ -64,7 +64,7 @@ if (floatingCta && floatingCtaMessage) {
   const renderFloatingMessage = () => {
     const message = messages[messageIndex];
     floatingCtaMessage.innerHTML = message.stars
-      ? `<span>${message.text}</span><span class="floating-cta-stars" aria-label="5 stars">${message.stars}</span>`
+      ? `<span>${message.text}</span><span class="floating-cta-stars" aria-label="4.9 stars">${message.stars}</span>`
       : `<span>${message.text}</span>`;
   };
 
@@ -128,3 +128,28 @@ if (floatingCta && floatingCtaMessage) {
   window.addEventListener("load", requestFloatingCtaUpdate);
   window.addEventListener("pageshow", requestFloatingCtaUpdate);
 }
+
+const carouselTargets = {
+  colourways: document.querySelector('[data-mobile-carousel="colourways"]'),
+  "adapter-features": document.querySelector(".adapter-feature-list"),
+  "need-to-know": document.querySelector(".need-to-know-grid"),
+};
+
+document.querySelectorAll("[data-carousel-control]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const targetName = button.getAttribute("data-carousel-target") || "";
+    const direction = button.getAttribute("data-carousel-control") === "previous" ? -1 : 1;
+    const target = carouselTargets[targetName];
+    if (!(target instanceof HTMLElement)) return;
+
+    const firstCard = target.firstElementChild;
+    const cardWidth = firstCard instanceof HTMLElement ? firstCard.getBoundingClientRect().width : target.clientWidth * 0.82;
+    const styles = window.getComputedStyle(target);
+    const gap = Number.parseFloat(styles.columnGap || styles.gap || "0") || 0;
+
+    target.scrollBy({
+      left: direction * (cardWidth + gap),
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
+  });
+});
