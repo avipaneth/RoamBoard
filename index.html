@@ -15,7 +15,7 @@
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='6' y='6' width='20' height='20' rx='6' fill='%23fb4a00'/%3E%3Cpath d='M10 16h12M16 10v12' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"
     />
-    <link rel="stylesheet" href="styles.css?v=picker-1" />
+    <link rel="stylesheet" href="styles.css?v=site-7" />
   </head>
   <body>
     <nav class="global-nav" aria-label="Global navigation">
@@ -39,8 +39,8 @@
             <p>The travel power board for Australians abroad.</p>
           </div>
           <button class="buy-button" type="button" data-checkout-trigger>Buy now</button>
-          <p class="hero-promo" aria-label="EOFY promotion, original price A$69.95, now A$54.95">
-            <span>EOFY promotion</span>
+          <p class="hero-promo" aria-label="Euro Summer promotion, original price A$69.95, now A$54.95">
+            <span>Euro Summer promotion</span>
             <span class="hero-promo-was">A$69.95</span>
             <span>A$54.95</span>
           </p>
@@ -299,6 +299,79 @@
         </article>
       </section>
 
+      <section class="destination-check" id="destination-check" aria-labelledby="destination-check-title">
+        <header class="destination-check-header">
+          <p>Fit before you fly</p>
+          <h2 id="destination-check-title">Destination check.</h2>
+          <p>See if Roamboard is compatible in your destination.</p>
+        </header>
+
+        <div class="destination-check-panel">
+          <div class="destination-check-content">
+            <div class="destination-check-copy">
+              <h3><span>Remove the guess work.</span> See if Roamboard is compatible in your destination.</h3>
+              <p>
+                Roamboard is made for Australian plug devices in Type C, E and F wall sockets. Choose a country below for a quick guide before you pack.
+              </p>
+            </div>
+
+            <div class="destination-card" data-destination-checker>
+              <h3>Destination</h3>
+              <div class="destination-combobox" data-destination-combobox>
+                <label class="visually-hidden" for="destination-search">Choose a country</label>
+                <span class="destination-selected-flag" data-destination-selected-flag aria-hidden="true"></span>
+                <input
+                  id="destination-search"
+                  type="text"
+                  role="combobox"
+                  autocomplete="off"
+                  spellcheck="false"
+                  aria-autocomplete="list"
+                  aria-expanded="false"
+                  aria-controls="destination-options"
+                  placeholder="Choose a country"
+                  data-destination-input
+                />
+                <button class="destination-toggle" type="button" aria-label="Show countries" data-destination-toggle>
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </button>
+                <div class="destination-options" id="destination-options" role="listbox" data-destination-options></div>
+              </div>
+
+              <div class="destination-result is-empty" aria-live="polite" data-destination-result>
+                <p>Choose a destination to check compatibility</p>
+              </div>
+            </div>
+          </div>
+
+          <picture class="destination-check-image">
+            <source
+              type="image/webp"
+              srcset="
+                assets/optimized/destination-check-blue-hand-new-720w.webp 720w,
+                assets/optimized/destination-check-blue-hand-new-1138w.webp 1138w
+              "
+              sizes="(max-width: 900px) calc(100vw - 36px), 569px"
+            />
+            <img
+              src="assets/optimized/destination-check-blue-hand-new-1138w.webp"
+              srcset="
+                assets/optimized/destination-check-blue-hand-new-720w.webp 720w,
+                assets/optimized/destination-check-blue-hand-new-1138w.webp 1138w
+              "
+              sizes="(max-width: 900px) calc(100vw - 36px), 569px"
+              width="1138"
+              height="854"
+              loading="lazy"
+              decoding="async"
+              alt="Baby Blue Roamboard held in one hand with its matching cable"
+            />
+          </picture>
+        </div>
+      </section>
+
       <section class="adapter-story" id="why-roamboard" aria-labelledby="adapter-story-title">
         <header class="adapter-story-header">
           <p>Power-up your travel game</p>
@@ -509,79 +582,6 @@
         </div>
       </section>
 
-      <section class="destination-check" id="destination-check" aria-labelledby="destination-check-title">
-        <header class="destination-check-header">
-          <p>Fit before you fly</p>
-          <h2 id="destination-check-title">Destination check.</h2>
-          <p>See if Roamboard is compatible in your destination.</p>
-        </header>
-
-        <div class="destination-check-panel">
-          <div class="destination-check-content">
-            <div class="destination-check-copy">
-              <h3><span>Remove the guess work.</span> See if Roamboard is compatible in your destination.</h3>
-              <p>
-                Roamboard is made for Australian plug devices in Type C, E and F wall sockets. Choose a country below for a quick guide before you pack.
-              </p>
-            </div>
-
-            <div class="destination-card" data-destination-checker>
-              <h3>Destination</h3>
-              <div class="destination-combobox" data-destination-combobox>
-                <label class="visually-hidden" for="destination-search">Choose a country</label>
-                <span class="destination-selected-flag" data-destination-selected-flag aria-hidden="true"></span>
-                <input
-                  id="destination-search"
-                  type="text"
-                  role="combobox"
-                  autocomplete="off"
-                  spellcheck="false"
-                  aria-autocomplete="list"
-                  aria-expanded="false"
-                  aria-controls="destination-options"
-                  placeholder="Choose a country"
-                  data-destination-input
-                />
-                <button class="destination-toggle" type="button" aria-label="Show countries" data-destination-toggle>
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="m6 9 6 6 6-6" />
-                  </svg>
-                </button>
-                <div class="destination-options" id="destination-options" role="listbox" data-destination-options></div>
-              </div>
-
-              <div class="destination-result is-empty" aria-live="polite" data-destination-result>
-                <p>Choose a destination to check compatibility</p>
-              </div>
-            </div>
-          </div>
-
-          <picture class="destination-check-image">
-            <source
-              type="image/webp"
-              srcset="
-                assets/optimized/destination-check-blue-hand-new-720w.webp 720w,
-                assets/optimized/destination-check-blue-hand-new-1138w.webp 1138w
-              "
-              sizes="(max-width: 900px) calc(100vw - 36px), 569px"
-            />
-            <img
-              src="assets/optimized/destination-check-blue-hand-new-1138w.webp"
-              srcset="
-                assets/optimized/destination-check-blue-hand-new-720w.webp 720w,
-                assets/optimized/destination-check-blue-hand-new-1138w.webp 1138w
-              "
-              sizes="(max-width: 900px) calc(100vw - 36px), 569px"
-              width="1138"
-              height="854"
-              loading="lazy"
-              decoding="async"
-              alt="Baby Blue Roamboard held in one hand with its matching cable"
-            />
-          </picture>
-        </div>
-      </section>
-
       <section class="need-to-know" aria-labelledby="need-to-know-title">
         <div class="need-to-know-header">
           <h2 id="need-to-know-title">Roamboard need-to-know.</h2>
@@ -591,9 +591,7 @@
         <div class="need-to-know-grid">
           <article class="know-card">
             <svg class="know-icon purple" viewBox="0 0 56 56" aria-hidden="true">
-              <rect x="7" y="17" width="42" height="23" rx="9" />
-              <path d="M16 23v4M12.5 29h7M28 23v4M24.5 29h7M39 24v10M44 24v10" />
-              <path d="M15 40v4M41 40v4" />
+              <path d="M31 5 14 31h12l-3 20 19-28H30z" />
             </svg>
             <h3>Powers up to <strong>five different devices</strong> simultaneously.</h3>
           </article>
@@ -602,23 +600,46 @@
             <svg class="know-icon orange" viewBox="0 0 56 56" aria-hidden="true">
               <circle cx="28" cy="28" r="18" />
               <path d="M10 28h36M28 10c5 5 8 11 8 18s-3 13-8 18M28 10c-5 5-8 11-8 18s3 13 8 18" />
-              <path d="M36 20.5a8 8 0 0 0-16 0c0 5.7 8 13.5 8 13.5s8-7.8 8-13.5Z" />
-              <circle cx="28" cy="20.5" r="2.6" />
+              <path d="M12.5 20h31M12.5 36h31" />
             </svg>
             <h3>Works in over <strong>100+ destinations</strong> across the globe.</h3>
           </article>
 
           <article class="know-card">
             <svg class="know-icon teal" viewBox="0 0 56 56" aria-hidden="true">
-              <path d="M13 18h9a7 7 0 0 1 0 14h-4a7 7 0 0 0 0 14h23" />
-              <path d="M8 13h10v10H8zM38 41h10v10H38z" />
-              <path d="M32 17h9M36.5 12.5v9" />
+              <path d="M10 28h36" />
+              <path d="m18 20-8 8 8 8M38 20l8 8-8 8" />
             </svg>
             <h3>A longer cord with <strong>one meter of reach</strong> to tackle corner-room sockets.</h3>
           </article>
         </div>
       </section>
+
+      <section class="get-roamboard" aria-labelledby="get-roamboard-title">
+        <div class="get-roamboard-panel">
+          <div class="get-roamboard-copy">
+            <p>Your adventure awaits</p>
+            <h2 id="get-roamboard-title">Get Roamboard</h2>
+            <button class="buy-button get-roamboard-buy" type="button" data-checkout-trigger>Buy now</button>
+          </div>
+          <div class="get-roamboard-media">
+            <img
+              src="assets/optimized/get-roamboard-flicker.webp"
+              alt="Chocolate Brown Roamboard held in hand"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </section>
     </main>
+
+    <aside class="floating-cta" data-floating-cta>
+      <div class="floating-cta-message" data-floating-cta-message>
+        <span>500+ Roamboards reserved this week</span>
+      </div>
+      <button class="floating-cta-buy" type="button" data-checkout-trigger>Buy now</button>
+    </aside>
 
     <footer class="site-footer">
       <div class="footer-brand">
@@ -675,7 +696,7 @@
 
           <div class="checkout-price-row">
             <div class="checkout-price-block" data-checkout-price>
-              <span class="checkout-price-note">EOFY promotion</span>
+              <span class="checkout-price-note">Euro Summer promotion</span>
               <span class="checkout-price">
                 <span class="checkout-price-was">A$69.95</span>
                 <span class="checkout-price-now">A$54.95</span>
@@ -698,8 +719,13 @@
 
           <div class="checkout-field-grid">
             <label class="checkout-field">
-              <span>Name</span>
-              <input type="text" name="name" autocomplete="name" placeholder="Your name" required />
+              <span>First name</span>
+              <input type="text" name="first_name" autocomplete="given-name" placeholder="First name" required />
+            </label>
+
+            <label class="checkout-field">
+              <span>Last name</span>
+              <input type="text" name="last_name" autocomplete="family-name" placeholder="Last name" required />
             </label>
 
             <label class="checkout-field">
@@ -718,12 +744,7 @@
 
             <label class="checkout-field">
               <span>Quantity</span>
-              <select name="quantity" required>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
+              <input type="number" name="quantity" inputmode="numeric" min="1" step="1" value="1" required />
             </label>
           </div>
 
@@ -737,13 +758,26 @@
             <p class="checkout-note" data-checkout-note></p>
           </div>
         </form>
+
+        <div class="checkout-confirmation" data-checkout-confirmation aria-live="polite">
+          <div class="checkout-confirmation-mark" aria-hidden="true">
+            <svg viewBox="0 0 72 72">
+              <circle cx="36" cy="36" r="29" />
+              <path d="m23 36 9 9 18-21" />
+            </svg>
+          </div>
+          <p>Pre-order request received.</p>
+          <h2>You're on the list.</h2>
+          <span>We’ll get back to you within 5 business days with an update on stock.</span>
+          <button class="checkout-confirmation-close" type="button" data-checkout-close>Done</button>
+        </div>
       </section>
     </div>
 
     <script src="supabase-config.js"></script>
     <script src="product-picker.js?v=picker-1"></script>
     <script src="destination-check.js?v=dest-1"></script>
-    <script src="site-animations.js?v=motion-1"></script>
-    <script src="checkout.js?v=checkout-1"></script>
+    <script src="site-animations.js?v=motion-3"></script>
+    <script src="checkout.js?v=checkout-4"></script>
   </body>
 </html>
