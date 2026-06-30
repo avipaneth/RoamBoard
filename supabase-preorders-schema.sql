@@ -4,77 +4,94 @@ create table if not exists public.preorders (
   id uuid primary key default gen_random_uuid(),
   created_at timestamptz not null default now(),
 
+  client_id text not null,
+  action text not null check (action in ('buy_now_clicked', 'checkout_submitted', 'preorder_committed')),
+
   first_name text,
   last_name text,
-  name text not null,
-  email text not null,
-  quantity integer not null default 1 check (quantity > 0),
+  email text,
+  quantity integer check (quantity is null or quantity > 0),
   colour text,
-  variant text,
-  notes text,
-
-  marketing_consent boolean not null default false,
-  source text default 'website',
-  status text not null default 'registered_interest'
+  marketing_consent boolean not null default false
 );
 
 alter table public.preorders
+add column if not exists client_id text,
+add column if not exists action text,
 add column if not exists first_name text,
-add column if not exists last_name text;
+add column if not exists last_name text,
+add column if not exists email text,
+add column if not exists quantity integer,
+add column if not exists colour text,
+add column if not exists marketing_consent boolean not null default false;
 
-create unique index if not exists preorders_email_unique
-on public.preorders (lower(email));
+alter table public.preorders
+alter column email drop not null,
+alter column quantity drop not null,
+alter column quantity drop default,
+alter column marketing_consent set default false;
 
-alter table public.preorders enable row level security;
+update public.preorders
+set
+  client_id = coalesce(client_id, id::text),
+  action = coalesce(action, 'preorder_committed'),
+  marketing_consent = coalesce(marketing_consent, false);
+
+alter table public.preorders
+alter column client_id set not null,
+alter column action set not null,
+alter column marketing_consent set not null;
+
+alter table public.preorders
+drop constraint if exists preorders_action_check,
+drop constraint if exists preorders_quantity_check;
+
+alter table public.preorders
+add constraint preorders_action_check
+check (action in ('buy_now_clicked', 'checkout_submitted', 'preorder_committed'));
+
+alter table public.preorders
+add constraint preorders_quantity_check
+check (quantity is null or quantity > 0);
 
 drop policy if exists "Allow public preorder inserts" on public.preorders;
+
+alter table public.preorders
+drop column if exists name,
+drop column if exists source,
+drop column if exists variant,
+drop column if exists notes,
+drop column if exists status,
+drop column if exists buy_details_submitted,
+drop column if exists preorder_committed,
+drop column if exists stage;
+
+drop table if exists public.preorder_funnel_events;
+drop index if exists preorders_email_unique;
+drop index if exists preorders_committed_email_unique;
+
+create unique index if not exists preorders_committed_email_unique
+on public.preorders (lower(email))
+where action = 'preorder_committed' and email is not null;
+
+alter table public.preorders enable row level security;
 
 create policy "Allow public preorder inserts"
 on public.preorders
 for insert
 to anon
 with check (
-  name is not null
-  and coalesce(first_name, '') <> ''
-  and coalesce(last_name, '') <> ''
-  and email is not null
-  and quantity > 0
-);
-
-create table if not exists public.preorder_funnel_events (
-  id uuid primary key default gen_random_uuid(),
-  created_at timestamptz not null default now(),
-
-  first_name text,
-  last_name text,
-  name text not null,
-  email text not null,
-  quantity integer not null default 1 check (quantity > 0),
-  colour text,
-  marketing_consent boolean not null default false,
-  source text default 'checkout_modal',
-
-  stage text not null check (stage in ('buy_details_submitted', 'preorder_committed')),
-  buy_details_submitted boolean not null default false,
-  preorder_committed boolean not null default false
-);
-
-alter table public.preorder_funnel_events enable row level security;
-
-drop policy if exists "Allow public preorder funnel event inserts" on public.preorder_funnel_events;
-
-create policy "Allow public preorder funnel event inserts"
-on public.preorder_funnel_events
-for insert
-to anon
-with check (
-  name is not null
-  and email is not null
-  and quantity > 0
+  coalesce(client_id, '') <> ''
+  and action in ('buy_now_clicked', 'checkout_submitted', 'preorder_committed')
   and (
-    (stage = 'buy_details_submitted' and buy_details_submitted = true and preorder_committed = false)
-    or
-    (stage = 'preorder_committed' and buy_details_submitted = false and preorder_committed = true)
+    action = 'buy_now_clicked'
+    or (
+      coalesce(first_name, '') <> ''
+      and coalesce(last_name, '') <> ''
+      and email is not null
+      and quantity > 0
+      and colour is not null
+    )
   )
 );
 

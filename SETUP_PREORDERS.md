@@ -16,7 +16,7 @@ Roamboard uses a simple Supabase insert-only waitlist form. It does not take pay
 2. Open the SQL editor.
 3. Paste and run the contents of `supabase-preorders-schema.sql`.
 
-The schema enables RLS and only grants public anonymous users `INSERT` access for committed preorders and funnel events. Do not add public `SELECT`, `UPDATE` or `DELETE` policies, otherwise customer emails could be exposed.
+The schema enables RLS and only grants public anonymous users `INSERT` access to `public.preorders`. Do not add public `SELECT`, `UPDATE` or `DELETE` policies, otherwise customer emails could be exposed.
 
 ## 2. Configure environment variables
 
@@ -52,7 +52,7 @@ pnpm preorders:config
 python3 -m http.server 4173
 ```
 
-Submit the form with a test email. On the first valid submit, Supabase should receive a `preorder_funnel_events` row with `stage = 'buy_details_submitted'`. On the pre-order submit, Supabase should receive a second `preorder_funnel_events` row with `stage = 'preorder_committed'` and a committed row in `preorders`. Try the same email twice to confirm the duplicate message appears.
+Click any Buy now button. Supabase should receive a `preorders` row with `action = 'buy_now_clicked'` and a browser `client_id`, even before customer details are entered. On the first valid form submit, Supabase should receive another row with `action = 'checkout_submitted'`. On the pre-order submit, Supabase should receive another row with `action = 'preorder_committed'`. Try the same email twice at the pre-order step to confirm the duplicate message appears.
 
 ## 5. Deploy
 
@@ -70,7 +70,8 @@ Then deploy the static files, including the generated `supabase-config.js`. For 
 Use the Supabase dashboard to view and export preorders:
 
 1. Open Table Editor.
-2. Select `public.preorders` for committed leads or `public.preorder_funnel_events` for the two-stage funnel.
-3. Use the export/download CSV action from the dashboard.
+2. Select `public.preorders`.
+3. Filter `action = 'buy_now_clicked'` for anonymous Buy now clicks, `action = 'checkout_submitted'` for valid detail submissions, or `action = 'preorder_committed'` for committed leads.
+4. Use the export/download CSV action from the dashboard.
 
 Keep real `.env` files and all Supabase secret/service-role keys out of git.

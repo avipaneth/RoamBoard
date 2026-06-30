@@ -23,7 +23,7 @@ const triggers = Array.from(document.querySelectorAll("[data-checkout-trigger]")
 const ORIGINAL_PRICE = 69.95;
 const PROMO_PRICE = 54.95;
 const SHARE_URL = "https://roamboard.shop/";
-const PRODUCT_PRICE = "Euro Summer promotion A$69.95 A$54.95";
+const CLIENT_ID_STORAGE_KEY = "roamboard_client_id";
 const checkoutCopy = {
   checkout: {
     kicker: "Roamboard",
@@ -58,6 +58,7 @@ let toastTimer = null;
 let isSubmitting = false;
 let supabaseClient = null;
 let checkoutStage = "checkout";
+let sessionClientId = null;
 
 async function getSupabaseClient() {
   if (supabaseClient) return supabaseClient;
@@ -90,9 +91,28 @@ function cleanOptionalText(value) {
   return text || null;
 }
 
-function isMissingColumnError(error) {
-  const message = String(error?.message || "").toLowerCase();
-  return error?.code === "PGRST204" || error?.code === "42703" || message.includes("column") || message.includes("schema cache");
+function createClientId() {
+  if (window.crypto?.randomUUID) return window.crypto.randomUUID();
+  return `client_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+}
+
+function getClientId() {
+  if (sessionClientId) return sessionClientId;
+
+  try {
+    const savedClientId = window.localStorage?.getItem(CLIENT_ID_STORAGE_KEY);
+    if (savedClientId) {
+      sessionClientId = savedClientId;
+      return sessionClientId;
+    }
+
+    sessionClientId = createClientId();
+    window.localStorage?.setItem(CLIENT_ID_STORAGE_KEY, sessionClientId);
+    return sessionClientId;
+  } catch {
+    sessionClientId = createClientId();
+    return sessionClientId;
+  }
 }
 
 function setNote(message, status = "") {
@@ -302,19 +322,13 @@ function getPayload() {
   const quantity = Number.parseInt(String(formData.get("quantity") || ""), 10);
   const firstName = String(formData.get("first_name") || "").trim();
   const lastName = String(formData.get("last_name") || "").trim();
-  const fullName = [firstName, lastName].filter(Boolean).join(" ");
   const data = {
     first_name: firstName,
     last_name: lastName,
-    name: fullName,
     email: String(formData.get("email") || "").trim().toLowerCase(),
     quantity,
     colour: cleanOptionalText(formData.get("colour")),
-    variant: PRODUCT_PRICE,
-    notes: cleanOptionalText(formData.get("notes")),
     marketing_consent: formData.has("marketing_consent"),
-    source: "checkout_modal",
-    status: "registered_interest",
   };
 
   return {
@@ -337,45 +351,43 @@ function isDuplicatePreorderError(error) {
   return error?.code === "23505" || message.includes("duplicate") || message.includes("unique");
 }
 
-function getFunnelEventPayload(payload, stage) {
+function getPreorderRecordPayload(payload, action) {
   return {
-    first_name: payload.first_name,
-    last_name: payload.last_name,
-    name: payload.name,
-    email: payload.email,
-    quantity: payload.quantity,
-    colour: payload.colour,
-    marketing_consent: payload.marketing_consent,
-    source: payload.source,
-    stage,
-    buy_details_submitted: stage === "buy_details_submitted",
-    preorder_committed: stage === "preorder_committed",
+    client_id: getClientId(),
+    first_name: payload?.first_name || null,
+    last_name: payload?.last_name || null,
+    email: payload?.email || null,
+    quantity: payload?.quantity || null,
+    colour: payload?.colour || null,
+    marketing_consent: payload?.marketing_consent || false,
+    action,
   };
 }
 
-async function recordFunnelEvent(supabase, payload, stage) {
+async function recordPreorderAction(supabase, payload, action) {
   try {
-    const { error } = await supabase.from("preorder_funnel_events").insert(getFunnelEventPayload(payload, stage));
+    const { error } = await supabase.from("preorders").insert(getPreorderRecordPayload(payload, action));
     if (error) {
-      console.warn("Preorder funnel event was not saved.", { stage, code: error.code });
+      console.warn("Preorder action was not saved.", { action, code: error.code });
     }
     return error;
   } catch (error) {
-    console.warn("Preorder funnel event was not saved.", { stage, error });
+    console.warn("Preorder action was not saved.", { action, error });
     return error;
   }
 }
 
-async function recordFunnelEventWhenReady(payload, stage) {
+async function recordPreorderActionWhenReady(payload, action) {
   const supabase = await getSupabaseClient();
   if (!supabase) return null;
-  return recordFunnelEvent(supabase, payload, stage);
+  return recordPreorderAction(supabase, payload, action);
 }
 
 triggers.forEach((trigger) => {
   trigger.addEventListener("click", (event) => {
     event.preventDefault();
     const preferredColour = trigger.getAttribute("data-checkout-colour") || "";
+    recordPreorderActionWhenReady({ colour: preferredColour || getCurrentPickerColour() }, "buy_now_clicked");
     openCheckout(preferredColour);
   });
 });
@@ -435,7 +447,7 @@ form?.addEventListener("submit", async (event) => {
   }
 
   if (checkoutStage === "checkout") {
-    recordFunnelEventWhenReady(payload.data, "buy_details_submitted");
+    recordPreorderActionWhenReady(payload.data, "checkout_submitted");
     setCheckoutStage("checking");
     return;
   }
@@ -451,8 +463,7 @@ form?.addEventListener("submit", async (event) => {
   setNote("");
 
   try {
-    await recordFunnelEvent(supabase, payload.data, "preorder_committed");
-    const { error } = await supabase.from("preorders").insert(payload.data);
+    const error = await recordPreorderAction(supabase, payload.data, "preorder_committed");
 
     if (error) {
       setNote(
