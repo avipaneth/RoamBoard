@@ -86,10 +86,10 @@ body {
 
 @keyframes promo-ticker-scroll {
   from {
-    transform: translateX(0);
+    transform: translateX(-33.333%);
   }
   to {
-    transform: translateX(-33.333%);
+    transform: translateX(0);
   }
 }
 
@@ -2552,7 +2552,7 @@ picture {
 .share-toast {
   position: fixed;
   left: 50%;
-  bottom: calc(24px + env(safe-area-inset-bottom));
+  top: calc(18px + env(safe-area-inset-top));
   z-index: 100;
   min-height: 44px;
   display: inline-flex;
@@ -2571,7 +2571,7 @@ picture {
   backdrop-filter: blur(20px) saturate(1.2);
   opacity: 0;
   pointer-events: none;
-  transform: translate(-50%, 12px) scale(0.98);
+  transform: translate(-50%, -12px) scale(0.98);
   transition:
     opacity 220ms ease,
     transform 260ms cubic-bezier(0.2, 0.72, 0.17, 1);
@@ -3117,12 +3117,18 @@ picture {
   }
 
   .hero {
+    --hero-image-visible-ratio: 0.68;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    justify-items: center;
     height: clamp(570px, calc(100svh - var(--global-nav-h) - 143px), 660px);
     overflow: hidden;
   }
 
   .hero-copy {
-    padding: 54px 18px 24px;
+    width: 100%;
+    min-width: 0;
+    padding: 54px 18px 0;
   }
 
   .hero h1 {
@@ -3139,9 +3145,24 @@ picture {
   }
 
   .hero-product {
+    position: relative;
     top: auto;
-    bottom: 0;
-    width: min(188vw, 760px);
+    bottom: auto;
+    left: auto;
+    min-width: 0;
+    width: 100%;
+    height: 100%;
+    margin-top: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    transform: none;
+  }
+
+  .hero-product img {
+    width: auto;
+    max-width: none;
+    height: calc((100% - 16px) / var(--hero-image-visible-ratio));
   }
 
   .travel-smarter {

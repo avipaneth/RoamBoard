@@ -142,13 +142,18 @@ document.querySelectorAll("[data-carousel-control]").forEach((button) => {
     const target = carouselTargets[targetName];
     if (!(target instanceof HTMLElement)) return;
 
-    const firstCard = target.firstElementChild;
-    const cardWidth = firstCard instanceof HTMLElement ? firstCard.getBoundingClientRect().width : target.clientWidth * 0.82;
-    const styles = window.getComputedStyle(target);
-    const gap = Number.parseFloat(styles.columnGap || styles.gap || "0") || 0;
+    const cards = Array.from(target.children).filter((child) => child instanceof HTMLElement);
+    if (!cards.length) return;
 
-    target.scrollBy({
-      left: direction * (cardWidth + gap),
+    const scrollLeft = target.scrollLeft;
+    const currentIndex = cards.reduce((closestIndex, card, index) => {
+      const closestCard = cards[closestIndex];
+      return Math.abs(card.offsetLeft - scrollLeft) < Math.abs(closestCard.offsetLeft - scrollLeft) ? index : closestIndex;
+    }, 0);
+    const nextIndex = (currentIndex + direction + cards.length) % cards.length;
+
+    target.scrollTo({
+      left: cards[nextIndex].offsetLeft,
       behavior: prefersReducedMotion ? "auto" : "smooth",
     });
   });
