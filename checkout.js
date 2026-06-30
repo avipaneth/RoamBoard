@@ -28,6 +28,8 @@ const PROMO_PRICE = 54.95;
 const SHARE_URL = "https://roamboard.shop/";
 const CLIENT_ID_STORAGE_KEY = "roamboard_client_id";
 const STEP_LOADING_MS = 4000;
+const META_CONTENT_ID = "roamboard";
+const META_CONTENT_NAME = "Roamboard";
 const checkoutCopy = {
   checkout: {
     kicker: "Roamboard",
@@ -147,6 +149,38 @@ function getClientId() {
     sessionClientId = createClientId();
     return sessionClientId;
   }
+}
+
+function trackMetaEvent(eventName, params = {}) {
+  if (typeof window.fbq !== "function") return;
+  window.fbq("track", eventName, params);
+}
+
+function getMetaQuantity(payload) {
+  const quantity = Number.parseInt(String(payload?.quantity || ""), 10);
+  return Number.isInteger(quantity) && quantity > 0 ? quantity : getDisplayQuantity();
+}
+
+function getMetaProductParams(payload = {}) {
+  const quantity = getMetaQuantity(payload);
+  const value = Number((quantity * PROMO_PRICE).toFixed(2));
+
+  return {
+    content_ids: [META_CONTENT_ID],
+    content_name: META_CONTENT_NAME,
+    content_type: "product",
+    contents: [
+      {
+        id: META_CONTENT_ID,
+        quantity,
+        item_price: PROMO_PRICE,
+      },
+    ],
+    currency: "AUD",
+    num_items: quantity,
+    value,
+    colour: payload?.colour || getPayloadSummary(payload).colour,
+  };
 }
 
 function setNote(message, status = "") {
@@ -492,6 +526,7 @@ async function commitPendingPreorder() {
     return;
   }
 
+  trackMetaEvent("Purchase", getMetaProductParams(payload));
   setSubmitting(true, "preorder");
   setPreorderNote("");
 
@@ -530,7 +565,14 @@ triggers.forEach((trigger) => {
     const scrollY = window.scrollY || document.documentElement.scrollTop;
     event.preventDefault();
     const preferredColour = trigger.getAttribute("data-checkout-colour") || "";
-    recordPreorderActionWhenReady({ colour: preferredColour || getCurrentPickerColour() }, "buy_now_clicked");
+    const leadColour = preferredColour || getCurrentPickerColour();
+    trackMetaEvent("Lead", {
+      content_ids: [META_CONTENT_ID],
+      content_name: META_CONTENT_NAME,
+      content_type: "product",
+      colour: leadColour,
+    });
+    recordPreorderActionWhenReady({ colour: leadColour }, "buy_now_clicked");
     openCheckout(preferredColour);
     restoreWindowScroll(scrollX, scrollY);
   });
@@ -592,6 +634,7 @@ form?.addEventListener("submit", async (event) => {
 
   if (checkoutStage === "checkout") {
     pendingPreorderPayload = payload.data;
+    trackMetaEvent("InitiateCheckout", getMetaProductParams(payload.data));
     recordPreorderActionWhenReady(payload.data, "checkout_submitted");
     beginStockCheck();
     return;
