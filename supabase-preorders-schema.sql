@@ -38,6 +38,52 @@ set
   marketing_consent = coalesce(marketing_consent, false);
 
 alter table public.preorders
+drop column if exists name,
+drop column if exists source,
+drop column if exists variant,
+drop column if exists notes,
+drop column if exists status,
+drop column if exists buy_details_submitted,
+drop column if exists preorder_committed,
+drop column if exists stage;
+
+do $$
+begin
+  if to_regclass('public.preorder_funnel_events') is not null then
+    insert into public.preorders (
+      created_at,
+      client_id,
+      action,
+      first_name,
+      last_name,
+      email,
+      quantity,
+      colour,
+      marketing_consent
+    )
+    select
+      funnel.created_at,
+      'legacy_funnel_' || funnel.id::text,
+      case
+        when funnel.stage = 'preorder_committed' or funnel.preorder_committed is true then 'preorder_committed'
+        else 'checkout_submitted'
+      end,
+      funnel.first_name,
+      funnel.last_name,
+      funnel.email,
+      funnel.quantity,
+      funnel.colour,
+      funnel.marketing_consent
+    from public.preorder_funnel_events as funnel
+    where not exists (
+      select 1
+      from public.preorders
+      where preorders.client_id = 'legacy_funnel_' || funnel.id::text
+    );
+  end if;
+end $$;
+
+alter table public.preorders
 alter column client_id set not null,
 alter column action set not null,
 alter column marketing_consent set not null;
@@ -56,23 +102,16 @@ check (quantity is null or quantity > 0);
 
 drop policy if exists "Allow public preorder inserts" on public.preorders;
 
-alter table public.preorders
-drop column if exists name,
-drop column if exists source,
-drop column if exists variant,
-drop column if exists notes,
-drop column if exists status,
-drop column if exists buy_details_submitted,
-drop column if exists preorder_committed,
-drop column if exists stage;
-
 drop table if exists public.preorder_funnel_events;
 drop index if exists preorders_email_unique;
 drop index if exists preorders_committed_email_unique;
 
-create unique index if not exists preorders_committed_email_unique
-on public.preorders (lower(email))
-where action = 'preorder_committed' and email is not null;
+create index if not exists preorders_action_created_at_idx
+on public.preorders (action, created_at desc);
+
+create index if not exists preorders_email_action_idx
+on public.preorders (lower(email), action)
+where email is not null;
 
 alter table public.preorders enable row level security;
 

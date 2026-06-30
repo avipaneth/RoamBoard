@@ -52,7 +52,7 @@ pnpm preorders:config
 python3 -m http.server 4173
 ```
 
-Click any Buy now button. Supabase should receive a `preorders` row with `action = 'buy_now_clicked'` and a browser `client_id`, even before customer details are entered. On the first valid form submit, Supabase should receive another row with `action = 'checkout_submitted'`. On the pre-order submit, Supabase should receive another row with `action = 'preorder_committed'`. Try the same email twice at the pre-order step to confirm the duplicate message appears.
+Click any Buy now button. Supabase should receive a `preorders` row with `action = 'buy_now_clicked'` and a browser `client_id`, even before customer details are entered. On the first valid form submit, Supabase should receive another row with `action = 'checkout_submitted'`. On the pre-order submit, Supabase should receive another row with `action = 'preorder_committed'`.
 
 ## 5. Deploy
 
