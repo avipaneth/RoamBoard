@@ -37,6 +37,8 @@ set
   action = coalesce(action, 'preorder_committed'),
   marketing_consent = coalesce(marketing_consent, false);
 
+drop policy if exists "Allow public preorder inserts" on public.preorders;
+
 alter table public.preorders
 drop column if exists name,
 drop column if exists source,
@@ -102,8 +104,6 @@ check (action in ('buy_now_clicked', 'checkout_submitted', 'preorder_committed')
 alter table public.preorders
 add constraint preorders_quantity_check
 check (quantity is null or quantity > 0);
-
-drop policy if exists "Allow public preorder inserts" on public.preorders;
 
 drop table if exists public.preorder_funnel_events;
 
