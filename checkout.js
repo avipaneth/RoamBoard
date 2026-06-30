@@ -5,7 +5,10 @@ const stockPill = document.querySelector("[data-stock-pill]");
 const stockMessage = document.querySelector("[data-stock-message]");
 const mobileStockCallout = document.querySelector("[data-mobile-stock-callout]");
 const submitButton = document.querySelector("[data-checkout-submit]");
+const preorderConfirmButton = document.querySelector("[data-preorder-confirm]");
 const note = document.querySelector("[data-checkout-note]");
+const preorderNote = document.querySelector("[data-preorder-note]");
+const preorderReview = document.querySelector("[data-preorder-review]");
 const quantityInput = form?.querySelector('input[name="quantity"]');
 const colourDot = document.querySelector("[data-checkout-colour-dot]");
 const summaryQuantity = document.querySelector("[data-summary-quantity]");
@@ -24,6 +27,7 @@ const ORIGINAL_PRICE = 69.95;
 const PROMO_PRICE = 54.95;
 const SHARE_URL = "https://roamboard.shop/";
 const CLIENT_ID_STORAGE_KEY = "roamboard_client_id";
+const STEP_LOADING_MS = 4000;
 const checkoutCopy = {
   checkout: {
     kicker: "Roamboard",
@@ -38,7 +42,7 @@ const checkoutCopy = {
   preorder: {
     kicker: "Pre-order available",
     title: "Bummer, our stock is telling us we’re out right now.",
-    description: "If you pre-order now, you'll secure your spot on the waitlist and still get access to any current promotion.",
+    description: "Pre-order today to keep access to this promotion, hold your spot in the queue, and get notified before shipment is ready.",
   },
 };
 const colourLabels = {
@@ -59,6 +63,36 @@ let isSubmitting = false;
 let supabaseClient = null;
 let checkoutStage = "checkout";
 let sessionClientId = null;
+let pendingPreorderPayload = null;
+
+function wait(ms) {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, ms);
+  });
+}
+
+function getCheckoutDialog() {
+  const dialog = modal?.querySelector(".checkout-dialog");
+  return dialog instanceof HTMLElement ? dialog : null;
+}
+
+function restoreWindowScroll(x, y) {
+  window.requestAnimationFrame(() => {
+    window.scrollTo(x, y);
+  });
+}
+
+function restoreDialogScroll(scrollTop) {
+  const dialog = getCheckoutDialog();
+  if (!dialog) return;
+
+  window.requestAnimationFrame(() => {
+    dialog.scrollTop = scrollTop;
+  });
+  window.setTimeout(() => {
+    dialog.scrollTop = scrollTop;
+  }, 80);
+}
 
 async function getSupabaseClient() {
   if (supabaseClient) return supabaseClient;
@@ -122,6 +156,13 @@ function setNote(message, status = "") {
   note.classList.toggle("is-error", status === "error");
 }
 
+function setPreorderNote(message, status = "") {
+  if (!preorderNote) return;
+  preorderNote.textContent = message;
+  preorderNote.classList.toggle("is-success", status === "success");
+  preorderNote.classList.toggle("is-error", status === "error");
+}
+
 function formatCurrency(value) {
   return `A$${value.toFixed(2)}`;
 }
@@ -141,6 +182,26 @@ function updateOrderSummary() {
   if (summaryOriginal) summaryOriginal.textContent = formatCurrency(originalSubtotal);
   if (summarySaving) summarySaving.textContent = `-${formatCurrency(saving)}`;
   if (summaryTotal) summaryTotal.textContent = formatCurrency(promoSubtotal);
+}
+
+function getPayloadSummary(payload = pendingPreorderPayload) {
+  const quantity = Number.isInteger(payload?.quantity) && payload.quantity > 0 ? payload.quantity : getDisplayQuantity();
+  const colour = payload?.colour || (colourSelect instanceof HTMLSelectElement ? colourSelect.value : "Chocolate Brown");
+  return {
+    quantity,
+    colour,
+    total: formatCurrency(quantity * PROMO_PRICE),
+  };
+}
+
+function updatePreorderReview() {
+  if (!preorderReview) return;
+  const summary = getPayloadSummary();
+  const detail = document.createElement("span");
+  const total = document.createElement("strong");
+  detail.textContent = `${summary.quantity} ${summary.quantity === 1 ? "board" : "boards"} · ${summary.colour}`;
+  total.textContent = summary.total;
+  preorderReview.replaceChildren(detail, total);
 }
 
 function updateColourSwatch() {
@@ -180,14 +241,29 @@ async function copyShareLink() {
   showShareToast();
 }
 
-function setSubmitting(nextSubmitting) {
+function setButtonLoading(button, isLoading, loadingText, idleText) {
+  if (!(button instanceof HTMLButtonElement)) return;
+  button.disabled = isLoading;
+  button.classList.toggle("is-loading", isLoading);
+
+  if (!isLoading) {
+    button.textContent = idleText;
+    return;
+  }
+
+  const spinner = document.createElement("span");
+  spinner.className = "checkout-button-spinner";
+  spinner.setAttribute("aria-hidden", "true");
+  button.replaceChildren(spinner, document.createTextNode(loadingText));
+}
+
+function setSubmitting(nextSubmitting, context = "all") {
   isSubmitting = nextSubmitting;
-  if (!(submitButton instanceof HTMLButtonElement)) return;
-  submitButton.disabled = nextSubmitting;
-  if (checkoutStage === "preorder") {
-    submitButton.textContent = nextSubmitting ? "Joining..." : "Join the pre-order list";
-  } else {
-    submitButton.textContent = nextSubmitting ? "Checking stock..." : "Buy now";
+  if (context === "all" || context === "checkout") {
+    setButtonLoading(submitButton, nextSubmitting, "Checking stock...", "Buy now");
+  }
+  if (context === "all" || context === "preorder") {
+    setButtonLoading(preorderConfirmButton, nextSubmitting, "Confirming pre-order...", "Confirm pre-order");
   }
 }
 
@@ -235,12 +311,13 @@ function setCheckoutStage(stage) {
   setSummaryCopy(stage);
 
   if (stage === "checkout") {
+    pendingPreorderPayload = null;
     setMobileStockCallout(false);
     stockPill.classList.add("is-hidden");
     stockMessage.classList.add("is-hidden");
-    submitButton.disabled = false;
-    submitButton.textContent = "Buy now";
+    setSubmitting(false, "all");
     setNote("");
+    setPreorderNote("");
     return;
   }
 
@@ -248,26 +325,31 @@ function setCheckoutStage(stage) {
     setMobileStockCallout(false);
     stockPill.classList.add("is-hidden");
     stockMessage.classList.add("is-hidden");
-    submitButton.disabled = false;
+    setSubmitting(false, "all");
     setNote("");
+    setPreorderNote("");
+    shareButton?.focus();
     return;
   }
 
   if (stage === "checking") {
     setMobileStockCallout(false);
     setStockState("checking");
-    submitButton.textContent = "Checking stock...";
+    setSubmitting(true, "checkout");
     setNote("Checking current availability.");
     stockTimer = window.setTimeout(() => {
+      setSubmitting(false, "checkout");
       setCheckoutStage("preorder");
-    }, 1800);
+    }, STEP_LOADING_MS);
     return;
   }
 
   setStockState("out");
-  setMobileStockCallout(true);
-  submitButton.textContent = "Join the pre-order list";
-  setNote("No payment needed to join the waitlist.");
+  setMobileStockCallout(false);
+  updatePreorderReview();
+  setNote("");
+  setPreorderNote("");
+  preorderConfirmButton?.focus();
 }
 
 function getCurrentPickerColour() {
@@ -383,12 +465,74 @@ async function recordPreorderActionWhenReady(payload, action) {
   return recordPreorderAction(supabase, payload, action);
 }
 
+function beginStockCheck() {
+  const dialogScrollTop = getCheckoutDialog()?.scrollTop || 0;
+  checkoutStage = "checking";
+  window.clearTimeout(stockTimer);
+  setSubmitting(true, "checkout");
+  setNote("");
+  restoreDialogScroll(dialogScrollTop);
+
+  stockTimer = window.setTimeout(() => {
+    setSubmitting(false, "checkout");
+    setCheckoutStage("preorder");
+  }, STEP_LOADING_MS);
+}
+
+async function commitPendingPreorder() {
+  if (isSubmitting || checkoutStage !== "preorder") return;
+
+  const payload = pendingPreorderPayload || getPayload()?.data;
+  const validationError = validatePayload(payload || {});
+
+  if (validationError) {
+    setCheckoutStage("checkout");
+    setNote(validationError, "error");
+    focusFirstField();
+    return;
+  }
+
+  setSubmitting(true, "preorder");
+  setPreorderNote("");
+
+  try {
+    await Promise.all([
+      (async () => {
+        const supabase = await getSupabaseClient();
+
+        if (supabase) {
+          const error = await recordPreorderAction(supabase, payload, "preorder_committed");
+          if (error && !isDuplicatePreorderError(error)) {
+            console.warn("Preorder confirmation could not be saved.", { code: error.code });
+          }
+        } else {
+          console.warn("Preorder confirmation could not be saved because Supabase is not configured.");
+        }
+      })(),
+      wait(STEP_LOADING_MS),
+    ]);
+  } catch (error) {
+    console.warn("Preorder confirmation could not be saved.", error);
+    await wait(STEP_LOADING_MS);
+  } finally {
+    form?.reset();
+    pendingPreorderPayload = null;
+    setSelectedColour();
+    updateOrderSummary();
+    setCheckoutStage("confirmation");
+    setSubmitting(false, "all");
+  }
+}
+
 triggers.forEach((trigger) => {
   trigger.addEventListener("click", (event) => {
+    const scrollX = window.scrollX || document.documentElement.scrollLeft;
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
     event.preventDefault();
     const preferredColour = trigger.getAttribute("data-checkout-colour") || "";
     recordPreorderActionWhenReady({ colour: preferredColour || getCurrentPickerColour() }, "buy_now_clicked");
     openCheckout(preferredColour);
+    restoreWindowScroll(scrollX, scrollY);
   });
 });
 
@@ -447,48 +591,17 @@ form?.addEventListener("submit", async (event) => {
   }
 
   if (checkoutStage === "checkout") {
+    pendingPreorderPayload = payload.data;
     recordPreorderActionWhenReady(payload.data, "checkout_submitted");
-    setCheckoutStage("checking");
+    beginStockCheck();
     return;
-  }
-
-  const supabase = await getSupabaseClient();
-
-  if (!supabase) {
-    setNote("The pre-order list is not connected just yet. Please email support@roamboard.shop and we'll add you manually.", "error");
-    return;
-  }
-
-  setSubmitting(true);
-  setNote("");
-
-  try {
-    const error = await recordPreorderAction(supabase, payload.data, "preorder_committed");
-
-    if (error) {
-      setNote(
-        isDuplicatePreorderError(error)
-          ? "Looks like you're already on the pre-order list."
-          : "We couldn't save your details just now. Please try again or email support@roamboard.shop.",
-        isDuplicatePreorderError(error) ? "success" : "error"
-      );
-      return;
-    }
-
-    form.reset();
-    setSelectedColour();
-    updateOrderSummary();
-    setCheckoutStage("confirmation");
-  } catch {
-    setNote("We couldn't save your details just now. Please try again or email support@roamboard.shop.", "error");
-  } finally {
-    setSubmitting(false);
   }
 });
 
 quantityInput?.addEventListener("input", updateOrderSummary);
 colourSelect?.addEventListener("change", updateColourSwatch);
 shareButton?.addEventListener("click", copyShareLink);
+preorderConfirmButton?.addEventListener("click", commitPendingPreorder);
 updateOrderSummary();
 updateColourSwatch();
 

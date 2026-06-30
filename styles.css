@@ -1980,6 +1980,7 @@ picture {
   transform: translateY(0) scale(1);
 }
 
+.checkout-modal.is-preorder-ready .checkout-dialog,
 .checkout-modal.is-confirmed .checkout-dialog {
   grid-template-columns: 1fr;
 }
@@ -2407,6 +2408,10 @@ picture {
 
 .checkout-submit {
   min-height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
   border: 1px solid transparent;
   border-radius: 999px;
   background: var(--ink);
@@ -2473,13 +2478,49 @@ picture {
     linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(245, 245, 247, 0.9));
 }
 
+.checkout-preorder {
+  display: none;
+  min-height: 500px;
+  place-items: center;
+  align-content: center;
+  gap: 16px;
+  padding: 58px 64px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(142, 142, 147, 0.14), transparent 34%),
+    radial-gradient(circle at 86% 14%, rgba(118, 186, 229, 0.1), transparent 32%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(245, 245, 247, 0.9));
+}
+
+.checkout-modal.is-preorder-ready .checkout-summary,
+.checkout-modal.is-preorder-ready .checkout-form,
 .checkout-modal.is-confirmed .checkout-summary,
-.checkout-modal.is-confirmed .checkout-form {
+.checkout-modal.is-confirmed .checkout-form,
+.checkout-modal.is-confirmed .checkout-preorder {
   display: none;
 }
 
+.checkout-modal.is-preorder-ready .checkout-preorder,
 .checkout-modal.is-confirmed .checkout-confirmation {
   display: grid;
+}
+
+.checkout-preorder-icon {
+  width: 76px;
+  height: 76px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 2px;
+  border-radius: 50%;
+  background: rgba(210, 210, 215, 0.58);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.68),
+    0 16px 34px rgba(29, 29, 31, 0.08);
+}
+
+.checkout-preorder-icon span {
+  font-size: 38px;
+  line-height: 1;
 }
 
 .checkout-confirmation-mark {
@@ -2515,10 +2556,29 @@ picture {
   line-height: 23px;
 }
 
+.checkout-preorder p {
+  margin: 0;
+  max-width: 480px;
+  color: rgba(29, 29, 31, 0.72);
+  font-size: 17px;
+  font-weight: 590;
+  line-height: 23px;
+}
+
 .checkout-confirmation h2 {
   margin: 0;
   color: var(--ink);
   font-size: 48px;
+  font-weight: 590;
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.checkout-preorder h2 {
+  max-width: 500px;
+  margin: 0;
+  color: var(--ink);
+  font-size: 44px;
   font-weight: 590;
   line-height: 1.05;
   letter-spacing: 0;
@@ -2529,6 +2589,51 @@ picture {
   color: rgba(29, 29, 31, 0.72);
   font-size: 18px;
   line-height: 25px;
+}
+
+.checkout-preorder-copy {
+  max-width: 500px;
+  display: grid;
+  gap: 8px;
+  margin-top: 2px;
+  color: rgba(29, 29, 31, 0.72);
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.checkout-preorder-copy strong {
+  color: var(--ink);
+  font-size: 19px;
+  font-weight: 590;
+  line-height: 25px;
+}
+
+.checkout-preorder-copy span {
+  display: block;
+}
+
+.checkout-preorder-review {
+  width: min(430px, 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 8px;
+  padding: 16px 18px;
+  border: 1px solid rgba(29, 29, 31, 0.08);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.74);
+  color: rgba(29, 29, 31, 0.68);
+  font-size: 14px;
+  font-weight: 590;
+  line-height: 19px;
+}
+
+.checkout-preorder-review strong {
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 21px;
+  text-align: right;
 }
 
 .checkout-confirmation-close {
@@ -2544,9 +2649,42 @@ picture {
   transition: background 180ms ease, transform 180ms ease;
 }
 
-.checkout-confirmation-close:hover {
+.checkout-preorder-submit {
+  min-height: 50px;
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 24px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 17px;
+  line-height: 22px;
+  cursor: pointer;
+  transition: background 180ms ease, transform 180ms ease, opacity 180ms ease;
+}
+
+.checkout-confirmation-close:hover,
+.checkout-preorder-submit:hover:not(:disabled) {
   background: #2c2c2e;
   transform: translateY(-1px);
+}
+
+.checkout-preorder-submit:disabled {
+  cursor: default;
+  opacity: 0.48;
+}
+
+.checkout-button-spinner {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  border: 2px solid rgba(255, 255, 255, 0.34);
+  border-top-color: var(--white);
+  border-radius: 50%;
+  animation: checkout-spin 760ms linear infinite;
 }
 
 .share-toast {
@@ -3082,6 +3220,56 @@ picture {
 
   .checkout-confirmation {
     padding: 38px 24px;
+  }
+
+  .checkout-preorder {
+    min-height: min(590px, calc(100svh - 24px));
+    gap: 13px;
+    padding: 38px 26px 28px;
+  }
+
+  .checkout-preorder-icon {
+    width: 66px;
+    height: 66px;
+    margin-bottom: 2px;
+  }
+
+  .checkout-preorder-icon span {
+    font-size: 32px;
+  }
+
+  .checkout-preorder h2 {
+    max-width: 330px;
+    font-size: 34px;
+    line-height: 1.07;
+  }
+
+  .checkout-preorder p,
+  .checkout-preorder-copy {
+    max-width: 330px;
+  }
+
+  .checkout-preorder-copy {
+    gap: 6px;
+    font-size: 15px;
+    line-height: 21px;
+  }
+
+  .checkout-preorder-copy strong {
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .checkout-preorder-review {
+    width: 100%;
+    margin-top: 4px;
+    padding: 14px 16px;
+    border-radius: 20px;
+  }
+
+  .checkout-preorder-submit {
+    width: 100%;
+    margin-top: 4px;
   }
 
   .checkout-confirmation h2 {
