@@ -47,6 +47,9 @@ drop column if exists buy_details_submitted,
 drop column if exists preorder_committed,
 drop column if exists stage;
 
+drop index if exists preorders_email_unique;
+drop index if exists preorders_committed_email_unique;
+
 do $$
 begin
   if to_regclass('public.preorder_funnel_events') is not null then
@@ -103,8 +106,6 @@ check (quantity is null or quantity > 0);
 drop policy if exists "Allow public preorder inserts" on public.preorders;
 
 drop table if exists public.preorder_funnel_events;
-drop index if exists preorders_email_unique;
-drop index if exists preorders_committed_email_unique;
 
 create index if not exists preorders_action_created_at_idx
 on public.preorders (action, created_at desc);
